@@ -21,6 +21,7 @@ namespace Where.Engine
 
             Root = new GameObjectList();
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
+            Root.Objects.Add(new Game.GameContext(63,63));
             Window.RenderFrame += (obj, arg) => { Window.SwapBuffers(); };
 
             Window.UpdateFrame += (obj, arg) =>

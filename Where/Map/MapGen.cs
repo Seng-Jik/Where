@@ -77,37 +77,7 @@ namespace MapGen
             map.BlockCells[end.X, end.Y] = Block.Target ;
         }
 
-        public void PaintMap()
-        {
-            StringBuilder buffer = new StringBuilder();
-            for (int y = 0; y < map.Height; y++)
-            {
-                for (int x = 0; x < map.Width; x++)
-                {
-                    switch (map.BlockCells[x, y])
-                    {
-                        case Block.Border:
-                            buffer.Append("■");
-                            break;
-                        case Block.Empty:
-                            buffer.Append("  ");
-                            break;
-                        case Block.Wall:
-                            buffer.Append("□");
-                            break;
-                        case Block.Target:
-                            buffer.Append("●");
-                            break;
-                        case Block.Begin:
-                            buffer.Append("●");
-                            break;
-                    }
-                }
-                buffer.Append('\n');
-            }
-            Console.Write(buffer.ToString());
 
-        }
         private void MakeMap()
         {
             List<Point> wallList = new List<Point>();
@@ -170,6 +140,37 @@ namespace MapGen
         {
             MapGenerator map = new MapGenerator(w, h);
             return map.MyMap;
+        }
+
+        public static void PaintMap(Map map)
+        {
+            StringBuilder buffer = new StringBuilder();
+            for (int y = 0; y < map.Height; y++)
+            {
+                for (int x = 0; x < map.Width; x++)
+                {
+                    switch (map.BlockCells[x, y])
+                    {
+                        case Block.Border:
+                            buffer.Append("■");
+                            break;
+                        case Block.Empty:
+                            buffer.Append("  ");
+                            break;
+                        case Block.Wall:
+                            buffer.Append("□");
+                            break;
+                        case Block.Target:
+                            buffer.Append("●");
+                            break;
+                        case Block.Begin:
+                            buffer.Append("●");
+                            break;
+                    }
+                }
+                buffer.Append(Environment.NewLine);
+            }
+            Console.Write(buffer.ToString());
         }
     }
 }
