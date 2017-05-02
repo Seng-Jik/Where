@@ -28,10 +28,11 @@ namespace Where.Renderer.Renderer2D
             GL.DrawElements(BeginMode.Triangles, wallScene.VerticleSize, DrawElementsType.UnsignedShort, 0);
         }
 
-        public void SetCamera(double angle, Vector2 pos)
+        public void SetCamera(float angle, Vector2 pos)
         {
             wallShader.Use();
             var camera = Matrix4.CreateOrthographicOffCenter(0, 64, 64, 0, -200, 200);
+            camera *= Matrix4.CreateRotationZ(angle/ 180.0F * 3.1415926F);
             wallShader.SetUniform(wallShaderLocs.unifCamera, ref camera);
         }
 

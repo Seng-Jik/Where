@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK;
-
+using OpenTK.Graphics.ES20;
 namespace Where.Engine
 {
     public class Engine
@@ -17,9 +17,14 @@ namespace Where.Engine
 
         static void Main(string[] args)
         {
-            Window = new GameWindow(1024, 768, OpenTK.Graphics.GraphicsMode.Default, "Where",GameWindowFlags.FixedWindow);
+            Window = new GameWindow(1024, 768, new OpenTK.Graphics.GraphicsMode(32, 0, 0, 4), "Where", GameWindowFlags.FixedWindow);
+
+            GL.Enable(EnableCap.MultisampleSgis);
+            GL.Enable(EnableCap.PolygonSmooth);
+            GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
 
             Root = new GameObjectList();
+            Window.UpdateFrame += (obj, arg) => { GL.ClearColor(0.0F, 0.0F, 0.0F, 1.0F); GL.Clear(ClearBufferMask.ColorBufferBit); };
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
             Root.Objects.Add(new Game.GameContext(63,63));
             Window.RenderFrame += (obj, arg) => { Window.SwapBuffers(); };
@@ -32,6 +37,8 @@ namespace Where.Engine
             };
             
             Window.Run(60, 60);
+
+            
         }
 
         static Queue<Task> tasks = new Queue<Task>();

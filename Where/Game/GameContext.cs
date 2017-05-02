@@ -23,14 +23,17 @@ namespace Where.Game
                 }
             }
 
+            angle = 0;
             renderer.SetWallBuffer(wallPoints);
-            renderer.SetCamera(1, new OpenTK.Vector2());
+            
             Engine.Engine.Window.RenderFrame += OnDraw;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
+            angle += 0.05f;
+            renderer.SetCamera(angle, new OpenTK.Vector2());
         }
 
         void OnDraw(object obj,object arg)
@@ -39,5 +42,6 @@ namespace Where.Game
         }
 
         Renderer.IRenderer renderer;
+        float angle;
     }
 }
