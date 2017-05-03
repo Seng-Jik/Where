@@ -23,7 +23,11 @@ namespace Where.Engine
             GL.Enable(EnableCap.PolygonSmooth);
             GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
 
+            Input.Roller.Init();
+            Input.Runner.Init();
+
             Root = new GameObjectList();
+            
             Window.UpdateFrame += (obj, arg) => { GL.ClearColor(0.0F, 0.0F, 0.0F, 1.0F); GL.Clear(ClearBufferMask.ColorBufferBit); };
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
             Root.Objects.Add(new Game.GameContext(63,63));

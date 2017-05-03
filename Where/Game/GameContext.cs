@@ -23,17 +23,18 @@ namespace Where.Game
                 }
             }
 
-            angle = 0;
             renderer.SetWallBuffer(wallPoints);
+
+            player = new Player(renderer);
+            Objects.Add(player);
             
+            //TODO:强引用，删除GameContext时内存泄漏。
             Engine.Engine.Window.RenderFrame += OnDraw;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
-            angle += 0.05f;
-            renderer.SetCamera(angle, new OpenTK.Vector2());
         }
 
         void OnDraw(object obj,object arg)
@@ -41,7 +42,10 @@ namespace Where.Game
             renderer.OnDraw();
         }
 
-        Renderer.IRenderer renderer;
-        float angle;
+        public Renderer.IRenderer Renderer { get => renderer; }
+        Player Player { get => player; }
+
+        readonly Player player;
+        readonly Renderer.IRenderer renderer;
     }
 }

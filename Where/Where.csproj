@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{558775C7-70FE-4A2F-BFB2-E87825BC6E22}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Where</RootNamespace>
     <AssemblyName>Where</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -47,7 +47,10 @@
     <Compile Include="Game\GameContext.cs" />
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\GameObjectList.cs" />
+    <Compile Include="Game\Player.cs" />
     <Compile Include="Game\Wall.cs" />
+    <Compile Include="Input\Roller.cs" />
+    <Compile Include="Input\Runner.cs" />
     <Compile Include="Map\MapGen.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,7 +66,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Input\" />
     <Folder Include="Renderer\Renderer3D\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
