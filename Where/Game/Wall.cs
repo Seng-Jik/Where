@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MapGen;
 
 namespace Where.Game
 {
-    public class Wall : Engine.GameObject
+    public class Wall : GameObjectWithCollitor
     {
-        public override bool Died => false;
-
-        public override void OnUpdate()
+        public Wall(Point pos) : base(pos)
         {
-            throw new NotImplementedException();
+        }
+
+        protected override void OnColliWithPlayer()
+        {
+            Console.WriteLine("In Wall!");
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Where.Game
                     if (map.BlockCells[x, y] == MapGen.Block.Wall || map.BlockCells[x, y] == MapGen.Block.Border)
                     {
                         wallPoints.Add(new MapGen.Point() { X = x, Y = y });
+                        Objects.Add(new Wall(new MapGen.Point() { X = x, Y = y }));
                     }
                     else if (map.BlockCells[x, y] == MapGen.Block.Begin)
                         playerPos = new OpenTK.Vector2(x, y);
