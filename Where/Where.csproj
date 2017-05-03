@@ -48,6 +48,7 @@
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\GameObjectList.cs" />
     <Compile Include="Game\Player.cs" />
+    <Compile Include="Game\Target.cs" />
     <Compile Include="Game\Wall.cs" />
     <Compile Include="Input\Roller.cs" />
     <Compile Include="Input\Runner.cs" />

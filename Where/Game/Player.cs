@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace Where.Game
 {
-    class Player : Engine.GameObject
+    public class Player : Engine.GameObject
     {
         public override bool Died => false;
 

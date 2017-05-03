@@ -20,7 +20,9 @@ namespace Where.Game
                 for (int x = 0; x < map.Width; ++x)
                 {
                     if (map.BlockCells[x, y] == MapGen.Block.Wall || map.BlockCells[x, y] == MapGen.Block.Border)
+                    {
                         wallPoints.Add(new MapGen.Point() { X = x, Y = y });
+                    }
                     else if (map.BlockCells[x, y] == MapGen.Block.Begin)
                         playerPos = new OpenTK.Vector2(x, y);
                     else if (map.BlockCells[x, y] == MapGen.Block.Target)
@@ -33,9 +35,12 @@ namespace Where.Game
 
             player = new Player(renderer,playerPos);
             Objects.Add(player);
+            Objects.Add(new Target(targetPos));
             
             //TODO:强引用，删除GameContext时内存泄漏。
             Engine.Engine.Window.RenderFrame += OnDraw;
+
+            CurrentGame = new WeakReference(this);
         }
 
         public override void OnUpdate()
@@ -49,9 +54,11 @@ namespace Where.Game
         }
 
         public Renderer.IRenderer Renderer { get => renderer; }
-        Player Player { get => player; }
+        public Player Player { get => player; }
 
         readonly Player player;
         readonly Renderer.IRenderer renderer;
+
+        public static WeakReference CurrentGame { get; private set; }
     }
 }
