@@ -28,6 +28,7 @@ namespace Where.Renderer.Renderer2D
 
         public void OnDraw()
         {
+            
             wallShader.Use();
             wallScene.VertexBuffer.Bind();
             wallScene.IndexBuffer.Bind();
@@ -40,8 +41,12 @@ namespace Where.Renderer.Renderer2D
             player.Bind();
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
 
-            short[] playerTriangle = { 0, 1, 2 };
-            GL.DrawElements(PrimitiveType.Triangles, 3, DrawElementsType.UnsignedShort, playerTriangle);
+            short[] playerTriangle = { 0, 2, 1, 0, 2, 3 };
+            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedShort, playerTriangle);
+
+            target.Bind();
+            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
+            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedShort, playerTriangle);
         }
 
         public void SetCamera(float angle, Vector2 pos)
@@ -53,21 +58,21 @@ namespace Where.Renderer.Renderer2D
             var rotation = Matrix4.CreateRotationZ(angle / 180.0F * 3.1415926F);
             camera *= rotation;
 
-            camera *= Matrix4.CreateOrthographicOffCenter(32, -32, 32, -32, -200, 200); 
-
+            camera *= Matrix4.CreateOrthographicOffCenter(32, -32, 32, -32, -200, 200);
 
 
             player.Bind();
             Vector2[] playerBuf =
             {
-                pos-new Vector2(0.0f,0.5f),
-                pos-new Vector2(0.5f,0.0f),
-                pos+new Vector2(0.5f,0.0f)
+                pos+new Vector2(-0.15f,0.15f),
+                pos+new Vector2(-0.15f,-0.15f),
+                pos+new Vector2(0.15f,-0.15f),
+                pos+new Vector2(0.15f,0.15f)
             };
 
             //Console.WriteLine(pos);
 
-            player.BufferData(3 * 2 * sizeof(float), playerBuf, BufferUsageHint.DynamicDraw);
+            player.BufferData(4 * 2 * sizeof(float), playerBuf, BufferUsageHint.DynamicDraw);
 
             wallShader.Use();
             wallShader.SetUniform(wallShaderLocs.unifCamera, ref camera);
@@ -75,12 +80,23 @@ namespace Where.Renderer.Renderer2D
             wallShader.SetUniform(wallShaderLocs.unifCamera, ref camera);
         }
 
-        public void SetWallBuffer(List<Point> wallPoints)
+        public void SetWallBuffer(List<Point> wallPoints,Point targetPoint)
         {
             wallShader.Use();
             
             wallScene = WallGen.CreateWallBuffer(wallPoints);
-            
+
+            target = new Lower.GLBuffer(BufferTarget.ArrayBuffer);
+            target.Bind();
+            OpenTK.Vector2 pos = new Vector2() { X = targetPoint.X, Y = targetPoint.Y };
+            Vector2[] playerBuf =
+{
+                pos+new Vector2(-0.5f,0.5f),
+                pos+new Vector2(-0.5f,-0.5f),
+                pos+new Vector2(0.5f,-0.5f),
+                pos+new Vector2(0.5f,0.5f)
+            };
+            target.BufferData(4 * 2 * sizeof(float), playerBuf, BufferUsageHint.StaticDraw);
         }
 
         SceneBuffer wallScene;
@@ -94,5 +110,7 @@ namespace Where.Renderer.Renderer2D
 
         Lower.GLBuffer player;
         Lower.GLShader playerShader;
+
+        Lower.GLBuffer target;
     }
 }

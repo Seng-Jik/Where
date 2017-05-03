@@ -14,18 +14,22 @@ namespace Where.Game
             renderer = new Renderer.Renderer2D.Renderer2D();
 
             OpenTK.Vector2 playerPos = new OpenTK.Vector2();
+            MapGen.Point targetPos = new MapGen.Point();
             for (int y = 0;y < map.Height; ++y)
             {
                 for (int x = 0; x < map.Width; ++x)
                 {
-                    if(map.BlockCells[x,y] == MapGen.Block.Wall || map.BlockCells[x, y] == MapGen.Block.Border)
+                    if (map.BlockCells[x, y] == MapGen.Block.Wall || map.BlockCells[x, y] == MapGen.Block.Border)
                         wallPoints.Add(new MapGen.Point() { X = x, Y = y });
                     else if (map.BlockCells[x, y] == MapGen.Block.Begin)
                         playerPos = new OpenTK.Vector2(x, y);
+                    else if (map.BlockCells[x, y] == MapGen.Block.Target)
+                        targetPos = new MapGen.Point() { X = x, Y = y };
+
                 }
             }
 
-            renderer.SetWallBuffer(wallPoints);
+            renderer.SetWallBuffer(wallPoints,targetPos);
 
             player = new Player(renderer,playerPos);
             Objects.Add(player);

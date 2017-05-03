@@ -9,7 +9,7 @@ namespace Where.Renderer
     {
         void OnDraw();
 
-        void SetWallBuffer(List<MapGen.Point> wallPoints);
+        void SetWallBuffer(List<MapGen.Point> wallPoints,MapGen.Point targetPoint);
         void SetCamera(float angle, Vector2 pos);
     }
 }
