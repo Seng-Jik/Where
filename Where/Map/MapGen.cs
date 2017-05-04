@@ -48,7 +48,6 @@ namespace MapGen
             else throw new Exception("An error occurred");
         }
         private void InitMap() {
-            Random rnd = new Random(DateTime.Now.Second);
             Point beg = new Point();
             Point end = new Point();
             for (int y = 0; y * 2 < map.Height; y++) 
@@ -77,11 +76,11 @@ namespace MapGen
             map.BlockCells[end.X, end.Y] = Block.Target ;
         }
 
-
+        Random rnd = new Random(DateTime.Now.Second);
         private void MakeMap()
         {
             List<Point> wallList = new List<Point>();
-            Random rnd = new Random(DateTime.Now.Second);
+            
 
             Point nowBlock = new Point();
             Point tmpBlock = new Point();
