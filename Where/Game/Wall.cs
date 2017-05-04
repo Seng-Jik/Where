@@ -16,7 +16,6 @@ namespace Where.Game
         {
             var map = ((GameContext)Game.GameContext.CurrentGame.Target).Map;
             Vector2 vec = new Vector2();
-            Vector2 fix = new Vector2();
             var pos = ((GameContext)(GameContext.CurrentGame.Target)).Player.Position;
             var lastpos = ((GameContext)(GameContext.CurrentGame.Target)).Player.LastPosition;
             vec.X = (pos.X - lastpos.X) * 2.5f;
