@@ -9,7 +9,7 @@ namespace MapGen
     {
         Empty,Wall,Target,Begin,Border
     }
-    public struct Map
+    public class Map
     {
         public Block[,] BlockCells;
         public int Width, Height;

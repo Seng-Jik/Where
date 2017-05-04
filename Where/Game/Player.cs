@@ -12,11 +12,12 @@ namespace Where.Game
             renderer = rnd;
             angle = 0;
             speed = 0;
-            Position = pos;
+            LastPosition = Position = pos;
         }
 
         public override void OnUpdate()
         {
+            LastPosition = Position;
             renderer.SetCamera(angle,Position);
             angle += Input.Roller.XMove / 4;
 
@@ -45,6 +46,7 @@ namespace Where.Game
         }
 
         public Vector2 Position { get; set; }
+        public Vector2 LastPosition { get; private set; }
         float angle,speed;
         readonly Renderer.IRenderer renderer;
     }

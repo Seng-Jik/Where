@@ -8,25 +8,25 @@ namespace Where.Game
     {
         public GameContext(int width,int height)
         {
-            var map = MapGen.MapGen.NewMap(width,height);
-            MapGen.MapGen.PaintMap(map);
+            Map = MapGen.MapGen.NewMap(width,height);
+            MapGen.MapGen.PaintMap(Map);
             List<MapGen.Point> wallPoints = new List<MapGen.Point>();
             renderer = new Renderer.Renderer2D.Renderer2D();
 
             OpenTK.Vector2 playerPos = new OpenTK.Vector2();
             MapGen.Point targetPos = new MapGen.Point();
-            for (int y = 0;y < map.Height; ++y)
+            for (int y = 0;y < Map.Height; ++y)
             {
-                for (int x = 0; x < map.Width; ++x)
+                for (int x = 0; x < Map.Width; ++x)
                 {
-                    if (map.BlockCells[x, y] == MapGen.Block.Wall || map.BlockCells[x, y] == MapGen.Block.Border)
+                    if (Map.BlockCells[x, y] == MapGen.Block.Wall || Map.BlockCells[x, y] == MapGen.Block.Border)
                     {
                         wallPoints.Add(new MapGen.Point() { X = x, Y = y });
                         Objects.Add(new Wall(new MapGen.Point() { X = x, Y = y }));
                     }
-                    else if (map.BlockCells[x, y] == MapGen.Block.Begin)
+                    else if (Map.BlockCells[x, y] == MapGen.Block.Begin)
                         playerPos = new OpenTK.Vector2(x, y);
-                    else if (map.BlockCells[x, y] == MapGen.Block.Target)
+                    else if (Map.BlockCells[x, y] == MapGen.Block.Target)
                         targetPos = new MapGen.Point() { X = x, Y = y };
 
                 }
@@ -59,6 +59,7 @@ namespace Where.Game
 
         readonly Player player;
         readonly Renderer.IRenderer renderer;
+        public MapGen.Map Map { get; private set; }
 
         public static WeakReference CurrentGame { get; private set; }
     }

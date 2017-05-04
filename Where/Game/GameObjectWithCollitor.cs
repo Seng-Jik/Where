@@ -22,10 +22,10 @@ namespace Where.Game
         {
             var playerPos = ((GameContext)GameContext.CurrentGame.Target).Player.Position;
             if (
-                playerPos.X > collitor.Left &&
-                playerPos.X < collitor.Right &&
-                playerPos.Y > collitor.Top &&
-                playerPos.Y < collitor.Bottom
+                playerPos.X > collitor.Left - 0.15f &&
+                playerPos.X < collitor.Right + 0.15f &&
+                playerPos.Y > collitor.Top - 0.15f &&
+                playerPos.Y < collitor.Bottom + 0.15f
                 )
             {
                 OnColliWithPlayer();
@@ -34,6 +34,8 @@ namespace Where.Game
 
         protected abstract void OnColliWithPlayer();
 
-        Box2 collitor;
+        readonly Box2 collitor;
+
+        protected Box2 Collitor { get => collitor; }
     }
 }
