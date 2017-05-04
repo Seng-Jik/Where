@@ -9,7 +9,7 @@ namespace Where.Game
         public GameContext(int width,int height)
         {
             Map = MapGen.MapGen.NewMap(width,height);
-            MapGen.MapGen.PaintMap(Map);
+            //MapGen.MapGen.PaintMap(Map);
             List<MapGen.Point> wallPoints = new List<MapGen.Point>();
             renderer = new Renderer.Renderer2D.Renderer2D();
 

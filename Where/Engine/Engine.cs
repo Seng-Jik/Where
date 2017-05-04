@@ -30,7 +30,7 @@ namespace Where.Engine
             
             Window.UpdateFrame += (obj, arg) => { GL.ClearColor(0.0F, 0.0F, 0.0F, 1.0F); GL.Clear(ClearBufferMask.ColorBufferBit); };
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
-            Root.Objects.Add(new Game.GameContext(63,63));
+            Root.Objects.Add(new Game.GameContext(223,223));
             Window.RenderFrame += (obj, arg) => { Window.SwapBuffers(); };
 
             Window.UpdateFrame += (obj, arg) =>
