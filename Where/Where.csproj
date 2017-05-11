@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{558775C7-70FE-4A2F-BFB2-E87825BC6E22}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Where</RootNamespace>
     <AssemblyName>Where</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -63,12 +63,12 @@
     <Compile Include="Renderer\Renderer2D\Renderer2D.cs" />
     <Compile Include="Renderer\Renderer2D\SceneBuffer.cs" />
     <Compile Include="Renderer\Renderer2D\WallGen.cs" />
+    <Compile Include="Renderer\Renderer3D\Earth.cs" />
+    <Compile Include="Renderer\Renderer3D\Renderer3D.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Renderer\Renderer3D\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

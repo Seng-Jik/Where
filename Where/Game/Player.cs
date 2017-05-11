@@ -25,7 +25,7 @@ namespace Where.Game
 
             if (s != Input.Runner.StateType.Stop)
             {
-                speed = s == Input.Runner.StateType.Go ? 0.5f : -0.5f;
+                speed = s == Input.Runner.StateType.Go ? 0.2f : -0.2f;
             }
 
             if(Math.Abs(speed) > 0.0f)

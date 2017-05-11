@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using OpenTK.Graphics.ES20;
 
 namespace Where.Game
 {
@@ -11,7 +12,7 @@ namespace Where.Game
             Map = MapGen.MapGen.NewMap(width,height);
             //MapGen.MapGen.PaintMap(Map);
             List<MapGen.Point> wallPoints = new List<MapGen.Point>();
-            renderer = new Renderer.Renderer2D.Renderer2D();
+            renderer = new Renderer.Renderer3D.Renderer3D();
 
             OpenTK.Vector2 playerPos = new OpenTK.Vector2();
             MapGen.Point targetPos = new MapGen.Point();
@@ -51,6 +52,8 @@ namespace Where.Game
 
         void OnDraw(object obj,object arg)
         {
+            GL.ClearColor(0, 0, 0, 1);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             renderer.OnDraw();
         }
 

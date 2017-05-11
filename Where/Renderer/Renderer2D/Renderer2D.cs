@@ -11,8 +11,8 @@ namespace Where.Renderer.Renderer2D
     {
         public Renderer2D()
         {
-            wallShader = new Lower.GLShader("2D_VS", "2D_Wall");
-            playerShader = new Lower.GLShader("2D_VS", "2D_Player");
+            wallShader = new Lower.GLShader("VertexShader", "2D_Wall");
+            playerShader = new Lower.GLShader("VertexShader", "2D_Player");
             wallShader.Use();
             wallShaderLocs.attrVertex = wallShader.GetAttributionLocation("Vertex");
             wallShader.EnableAttribute(wallShaderLocs.attrVertex);
@@ -32,20 +32,20 @@ namespace Where.Renderer.Renderer2D
             wallShader.Use();
             wallScene.VertexBuffer.Bind();
             wallScene.IndexBuffer.Bind();
-            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
+            GL.VertexAttribPointer(wallShaderLocs.attrVertex, 2, VertexAttribPointerType.Float, false, 0, 0);
             wallScene.IndexBuffer.Bind();
             GL.DrawElements(BeginMode.Triangles, wallScene.VerticleSize, DrawElementsType.UnsignedShort, 0);
 
             playerShader.Use();
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             player.Bind();
-            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
+            GL.VertexAttribPointer(playerShaderLocs.attrVertex, 2, VertexAttribPointerType.Float, false, 0, 0);
 
             short[] playerTriangle = { 0, 2, 1, 0, 2, 3 };
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedShort, playerTriangle);
 
             target.Bind();
-            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 0, 0);
+            GL.VertexAttribPointer(playerShaderLocs.attrVertex, 2, VertexAttribPointerType.Float, false, 0, 0);
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedShort, playerTriangle);
         }
 
@@ -59,6 +59,7 @@ namespace Where.Renderer.Renderer2D
             camera *= rotation;
 
             camera *= Matrix4.CreateOrthographicOffCenter(32, -32, 32, -32, -200, 200);
+            camera *= Matrix4.CreateScale(8.0f);
 
 
             player.Bind();
@@ -88,7 +89,7 @@ namespace Where.Renderer.Renderer2D
 
             target = new Lower.GLBuffer(BufferTarget.ArrayBuffer);
             target.Bind();
-            OpenTK.Vector2 pos = new Vector2() { X = targetPoint.X, Y = targetPoint.Y };
+            Vector2 pos = new Vector2() { X = targetPoint.X, Y = targetPoint.Y };
             Vector2[] playerBuf =
 {
                 pos+new Vector2(-0.5f,0.5f),
