@@ -21,15 +21,15 @@ namespace Where.Renderer.Renderer3D
 
             //底部顶点
             verticles.Add(new Vector3(2*BOX_SIZE*pos.X - BOX_SIZE, 0, -2*BOX_SIZE*pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
-            verticles.Add(new Vector3(2*BOX_SIZE*pos.X + BOX_SIZE, 0, -2*BOX_SIZE*pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
+            verticles.Add(new Vector3(2*BOX_SIZE*pos.X + BOX_SIZE, 0, -2*BOX_SIZE*pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(1, 0));
             verticles.Add(new Vector3(2*BOX_SIZE*pos.X + BOX_SIZE, 0, -2*BOX_SIZE* pos.Y+ BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
-            verticles.Add(new Vector3(2*BOX_SIZE*pos.X - BOX_SIZE, 0, -2*BOX_SIZE* pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
+            verticles.Add(new Vector3(2*BOX_SIZE*pos.X - BOX_SIZE, 0, -2*BOX_SIZE* pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(1, 0));
 
             //顶部顶点
-            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
-            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X + BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
-            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X + BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
-            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 1));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X + BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(1, 1));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X + BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(0, 1));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(1, 1));
 
             //顶点索引
 

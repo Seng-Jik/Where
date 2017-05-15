@@ -17,7 +17,7 @@ namespace Where.Engine
 
         static void Main(string[] args)
         {
-            Window = new GameWindow(1024, 768, new OpenTK.Graphics.GraphicsMode(32, 0, 0, 4), "Where", GameWindowFlags.FixedWindow);
+            Window = new GameWindow(1024, 768, new OpenTK.Graphics.GraphicsMode(32, 16, 0, 4), "Where", GameWindowFlags.FixedWindow);
 
             GL.Enable(EnableCap.MultisampleSgis);
             GL.Enable(EnableCap.PolygonSmooth);
