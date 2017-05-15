@@ -23,7 +23,7 @@ namespace Where.Input
             {
                 var ret = leftButton? mouseXDelta : 0;
                 mouseXDelta = 0;
-                return ret;
+                return -ret;
             }
         }
 
