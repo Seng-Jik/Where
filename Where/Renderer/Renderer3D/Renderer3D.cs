@@ -48,13 +48,14 @@ namespace Where.Renderer.Renderer3D
             //Console.WriteLine(new Vector3((float)Math.Cos(angle*Math.PI/180), 0, (float)Math.Sin(angle * Math.PI / 180)));
 
             var camera = Matrix4.Identity;
-            camera *= Matrix4.CreateTranslation(new Vector3(pos.X * 10.5F, -10.0F, -pos.Y));
-            camera *= Matrix4.CreateRotationY((float)(angle * Math.PI / 180));
+
+            camera *= Matrix4.CreateTranslation(new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y));
+            camera *= Matrix4.CreateRotationY((float)((angle + 180) * Math.PI / 180));
 
 #pragma warning disable CS0618 // 类型或成员已过时
-            camera *= Matrix4.Perspective(90, 3.0F / 4.0F, 0.1F, 100.0F);
+            camera *= Matrix4.Perspective(90, 3.0F / 4.0F, 0.1F, 1000.0F);
 #pragma warning restore CS0618 // 类型或成员已过时
-
+            
 
 
             objectDraw.Use();
