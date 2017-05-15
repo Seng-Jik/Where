@@ -65,6 +65,7 @@
     <Compile Include="Renderer\Renderer2D\WallGen.cs" />
     <Compile Include="Renderer\Renderer3D\Earth.cs" />
     <Compile Include="Renderer\Renderer3D\Renderer3D.cs" />
+    <Compile Include="Renderer\Renderer3D\Wall.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

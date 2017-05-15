@@ -28,8 +28,9 @@ namespace Where.Renderer.Renderer3D
 
             objectDraw.Use();
             earth.OnDraw(objectDrawLocs);
+            wall.OnDraw(objectDrawLocs);
 
-            GL.Enable(EnableCap.DepthTest);
+            GL.Disable(EnableCap.DepthTest);
 
             GL.Viewport(0, 0, Engine.Engine.Window.Width / 4, Engine.Engine.Window.Height / 4);
             renderer2d.OnDraw();
@@ -47,10 +48,13 @@ namespace Where.Renderer.Renderer3D
             //Console.WriteLine(new Vector3((float)Math.Cos(angle*Math.PI/180), 0, (float)Math.Sin(angle * Math.PI / 180)));
 
             var camera = Matrix4.Identity;
-            camera *= Matrix4.CreateTranslation(new Vector3(pos.X, -10.0F, -pos.Y));
+            camera *= Matrix4.CreateTranslation(new Vector3(pos.X * 10.5F, -10.0F, -pos.Y));
             camera *= Matrix4.CreateRotationY((float)(angle * Math.PI / 180));
-            //camera *= Matrix4.CreatePerspectiveOffCenter(-4.0F, 4.0F, 3.0F, -3.0F, 0.1F, 5.0F);
+
+#pragma warning disable CS0618 // 类型或成员已过时
             camera *= Matrix4.Perspective(90, 3.0F / 4.0F, 0.1F, 100.0F);
+#pragma warning restore CS0618 // 类型或成员已过时
+
 
 
             objectDraw.Use();
@@ -60,6 +64,7 @@ namespace Where.Renderer.Renderer3D
         public void SetWallBuffer(List<Point> wallPoints, Point targetPoint)
         {
             renderer2d.SetWallBuffer(wallPoints, targetPoint);
+            wall = new Wall(wallPoints);
         }
 
         Renderer2D.Renderer2D renderer2d = new Renderer2D.Renderer2D();
@@ -74,5 +79,7 @@ namespace Where.Renderer.Renderer3D
                 TexCoord;
         }
         ObjectDrawShaderLocs objectDrawLocs;
+
+        Wall wall;
     }
 }
