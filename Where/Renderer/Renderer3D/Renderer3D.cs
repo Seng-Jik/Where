@@ -53,9 +53,9 @@ namespace Where.Renderer.Renderer3D
             camera *= Matrix4.CreateRotationY((float)((angle + 180) * Math.PI / 180));
 
 #pragma warning disable CS0618 // 类型或成员已过时
-            camera *= Matrix4.Perspective(90, 3.0F / 4.0F, 0.1F, 1000.0F);
+            camera *= Matrix4.Perspective(90, Engine.Engine.Window.Height / ((float)Engine.Engine.Window.Width), 0.1F, 1000.0F);
 #pragma warning restore CS0618 // 类型或成员已过时
-            
+
 
 
             objectDraw.Use();

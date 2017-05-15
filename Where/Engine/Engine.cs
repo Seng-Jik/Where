@@ -17,7 +17,7 @@ namespace Where.Engine
 
         static void Main(string[] args)
         {
-            Window = new GameWindow(1024, 768, new OpenTK.Graphics.GraphicsMode(32, 16, 0, 4), "Where", GameWindowFlags.FixedWindow);
+            Window = new GameWindow(1024, 768, new OpenTK.Graphics.GraphicsMode(32, 16, 0, 4), "Where", GameWindowFlags.Default);
 
             GL.Enable(EnableCap.MultisampleSgis);
             GL.Enable(EnableCap.PolygonSmooth);
@@ -30,7 +30,7 @@ namespace Where.Engine
             
             Window.UpdateFrame += (obj, arg) => { GL.ClearColor(0.0F, 0.0F, 0.0F, 1.0F); GL.Clear(ClearBufferMask.ColorBufferBit); };
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
-            Root.Objects.Add(new Game.GameContext(11,11));
+            Root.Objects.Add(new Game.GameContext(65,65));
             Window.RenderFrame += (obj, arg) => { Window.SwapBuffers(); };
 
             Window.UpdateFrame += (obj, arg) =>
