@@ -51,6 +51,12 @@ vec2 ParallaxUvDelta(v2f i)
 void main(){
 	vec4 color = texture2D(Surface,TexCoord);
 	gl_FragColor = CalcFog(color,GetDepthFogDensity()) * vec4(0.30,0.30,0.35,1.0);
+	/*gl_FragColor *= vec4(0.752941176470588,0.752941176470588,0.752941176470588,1.0);
+	gl_FragColor *= 1.5;
+	
+	float y = WorldPos.y / 450.0;
+	
+	gl_FragColor += vec4(0.752941176470588,0.752941176470588,0.752941176470588,1.0) * y;*/
 	//gl_FragColor = color;
 	//gl_FragColor = CalcFog(color,GetDepthFogDensity());
 	
