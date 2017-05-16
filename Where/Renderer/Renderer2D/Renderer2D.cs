@@ -41,7 +41,7 @@ namespace Where.Renderer.Renderer2D
             player.Bind();
             GL.VertexAttribPointer(playerShaderLocs.attrVertex, 2, VertexAttribPointerType.Float, false, 0, 0);
 
-            short[] playerTriangle = { 0, 2, 1, 0, 2, 3 };
+            short[] playerTriangle = { 0, 1, 2, 0, 2, 3 };
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedShort, playerTriangle);
 
             target.Bind();

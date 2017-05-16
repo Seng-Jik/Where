@@ -19,8 +19,9 @@ namespace Where.Renderer.Renderer3D
                 new Vector3(0.0f,0,0.0f),
                 new Vector3(1600.0f,0,0.0f),
                 new Vector3(1600.0f,0,-1600.0f),
-                new Vector3(0.0f,0,0.0f),
                 new Vector3(0.0f,0,-1600.0f),
+                new Vector3(0.0f,0,0.0f),
+
                 /*new Vector3(1.0f,1.0f,0),
                 new Vector3(-1.0f,-1.0f,0),
                 new Vector3(-1.0f,1.0f,0),
@@ -35,8 +36,9 @@ namespace Where.Renderer.Renderer3D
                 new Vector2(1,0),
                 new Vector2(1,1),
                 new Vector2(0,1),
-                new Vector2(1,0),
                 new Vector2(0,0),
+                new Vector2(1,0),
+
             };
             earthBuffer.Bind();
             earthBuffer.BufferData(3 * 6 * sizeof(float), earth, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);

@@ -62,22 +62,22 @@ namespace Where.Renderer.Renderer3D
             indicles.Add((ushort)(begin + 5));
 
             //右面
-            indicles.Add((ushort)(begin + 3));
             indicles.Add((ushort)(begin + 6));
             indicles.Add((ushort)(begin + 7));
-
             indicles.Add((ushort)(begin + 3));
-            indicles.Add((ushort)(begin + 6));
+
             indicles.Add((ushort)(begin + 2));
+            indicles.Add((ushort)(begin + 6));
+            indicles.Add((ushort)(begin + 3));
 
             //前面
+            indicles.Add((ushort)(begin + 3));
+            indicles.Add((ushort)(begin + 4));
             indicles.Add((ushort)(begin + 0));
-            indicles.Add((ushort)(begin + 4));
-            indicles.Add((ushort)(begin + 3));
 
-            indicles.Add((ushort)(begin + 3));
-            indicles.Add((ushort)(begin + 4));
             indicles.Add((ushort)(begin + 7));
+            indicles.Add((ushort)(begin + 4));
+            indicles.Add((ushort)(begin + 3));
 
             //后面
             indicles.Add((ushort)(begin + 1));

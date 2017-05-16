@@ -28,8 +28,9 @@ namespace Where.Renderer.Renderer2D
                 index.Add((short)(nowIndex + 1));
                 index.Add((short)(nowIndex + 2));
                 index.Add(nowIndex);
-                index.Add((short)(nowIndex + 3));
                 index.Add((short)(nowIndex + 2));
+                index.Add((short)(nowIndex + 3));
+
                 nowIndex += 4;
             }
 

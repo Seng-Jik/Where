@@ -23,6 +23,10 @@ namespace Where.Engine
             GL.Enable(EnableCap.PolygonSmooth);
             GL.Hint(HintTarget.PolygonSmoothHint, HintMode.Nicest);
 
+            GL.CullFace(CullFaceMode.Back);
+            GL.Enable(EnableCap.CullFace);
+
+
             Input.Roller.Init();
             Input.Runner.Init();
 
@@ -30,7 +34,7 @@ namespace Where.Engine
             
             Window.UpdateFrame += (obj, arg) => { GL.ClearColor(0.0F, 0.0F, 0.0F, 1.0F); GL.Clear(ClearBufferMask.ColorBufferBit); };
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
-            Root.Objects.Add(new Game.GameContext(65,65));
+            Root.Objects.Add(new Game.GameContext(7,7));
             Window.RenderFrame += (obj, arg) => { Window.SwapBuffers(); };
 
             Window.UpdateFrame += (obj, arg) =>

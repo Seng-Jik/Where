@@ -40,21 +40,12 @@ namespace Where.Renderer.Renderer3D
         {
             renderer2d.SetCamera(angle, pos);
 
-            /*Matrix4 camera = Matrix4.LookAt(
-                new Vector3(-pos.X, 1.0F, -pos.Y), 
-                new Vector3((float)Math.Cos(angle * Math.PI / 180),0, (float)Math.Sin(angle * Math.PI / 180)),
-                new Vector3(0,1,0));*/
-            //Matrix4.Identity;
-            //Console.WriteLine(new Vector3((float)Math.Cos(angle*Math.PI/180), 0, (float)Math.Sin(angle * Math.PI / 180)));
-
             var camera = Matrix4.Identity;
 
             camera *= Matrix4.CreateTranslation(new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y));
             camera *= Matrix4.CreateRotationY((float)((angle + 180) * Math.PI / 180));
 
-#pragma warning disable CS0618 // 类型或成员已过时
-            camera *= Matrix4.Perspective(90, Engine.Engine.Window.Height / ((float)Engine.Engine.Window.Width), 0.1F, 1000.0F);
-#pragma warning restore CS0618 // 类型或成员已过时
+            camera *= Matrix4.CreatePerspectiveFieldOfView((float)Math.PI/1.7F, Engine.Engine.Window.Height / ((float)Engine.Engine.Window.Width), 0.1F, 1000.0F);
 
 
 
