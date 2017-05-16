@@ -15,11 +15,11 @@ namespace Where.Renderer.Renderer3D
         {
             Vector3[] earth =
             {
-                new Vector3(1600.0f,0,-1600.0f),
+                new Vector3(3200.0f,0,-3200.0f),
                 new Vector3(0.0f,0,0.0f),
-                new Vector3(1600.0f,0,0.0f),
-                new Vector3(1600.0f,0,-1600.0f),
-                new Vector3(0.0f,0,-1600.0f),
+                new Vector3(3200.0f,0,0.0f),
+                new Vector3(3200.0f,0,-3200.0f),
+                new Vector3(0.0f,0,-3200.0f),
                 new Vector3(0.0f,0,0.0f),
 
                 /*new Vector3(1.0f,1.0f,0),

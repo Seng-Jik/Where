@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MapGen;
 using OpenTK;
+using System.Windows.Forms;
 
 namespace Where.Game
 {
@@ -16,7 +17,8 @@ namespace Where.Game
 
         protected override void OnColliWithPlayer()
         {
-            Console.WriteLine("Win!");
+            MessageBox.Show("Win!");
+            Engine.Engine.Window.Close();
         }
     }
 }
