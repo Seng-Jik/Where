@@ -52,7 +52,7 @@ namespace Where.Game
 
         void OnDraw(object obj,object arg)
         {
-            GL.ClearColor(1, 1, 1, 1);
+            GL.ClearColor(0, 0, 0, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             renderer.OnDraw();
         }

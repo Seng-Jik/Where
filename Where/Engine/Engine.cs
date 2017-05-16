@@ -33,7 +33,7 @@ namespace Where.Engine
             Root = new GameObjectList();
             
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
-            Root.Objects.Add(new Game.GameContext(7,7));
+            Root.Objects.Add(new Game.GameContext(27,27));
             Window.RenderFrame += (obj, arg) => { Window.SwapBuffers(); };
 
             Window.UpdateFrame += (obj, arg) =>

@@ -15,8 +15,8 @@ namespace Where.Renderer.Lower
         {
             var vShader = GL.CreateShader(ShaderType.VertexShader);
             var fShader = GL.CreateShader(ShaderType.FragmentShader);
-            GL.ShaderSource(vShader, File.ReadAllText("../../Shaders/" + vert + ".vs"));
-            GL.ShaderSource(fShader, File.ReadAllText("../../Shaders/" + frag + ".fs"));
+            GL.ShaderSource(vShader, File.ReadAllText("../../../Assets/Shaders/" + vert + ".vs"));
+            GL.ShaderSource(fShader, File.ReadAllText("../../../Assets/Shaders/" + frag + ".fs"));
             GL.CompileShader(vShader);
             GL.CompileShader(fShader);
             var vLog = GL.GetShaderInfoLog(vShader);
@@ -49,6 +49,16 @@ namespace Where.Renderer.Lower
         public void SetUniform(int loc,ref Matrix4 mat4)
         {
             GL.UniformMatrix4(loc, false, ref mat4);
+        }
+
+        public void SetUniform(int loc, float v)
+        {
+            GL.Uniform1(loc, v);
+        }
+
+        public void SetUniform(string name,int i)
+        {
+            GL.Uniform1(GetUniformLocation(name), i);
         }
 
         public void EnableAttribute(int loc)

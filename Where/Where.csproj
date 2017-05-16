@@ -60,11 +60,13 @@
     <Compile Include="Renderer\IRenderer.cs" />
     <Compile Include="Renderer\Lower\GLBuffer.cs" />
     <Compile Include="Renderer\Lower\GLShader.cs" />
+    <Compile Include="Renderer\Lower\GLTexture.cs" />
     <Compile Include="Renderer\Lower\SSTReader.cs" />
     <Compile Include="Renderer\Renderer2D\Renderer2D.cs" />
     <Compile Include="Renderer\Renderer2D\SceneBuffer.cs" />
     <Compile Include="Renderer\Renderer2D\WallGen.cs" />
     <Compile Include="Renderer\Renderer3D\Earth.cs" />
+    <Compile Include="Renderer\Renderer3D\Materia.cs" />
     <Compile Include="Renderer\Renderer3D\Renderer3D.cs" />
     <Compile Include="Renderer\Renderer3D\Wall.cs" />
   </ItemGroup>

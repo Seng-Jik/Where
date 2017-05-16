@@ -17,17 +17,37 @@ namespace Where.Renderer.Renderer3D
             objectDrawLocs.Vertex = objectDraw.GetAttributionLocation("Vertex");
             objectDrawLocs.Camera = objectDraw.GetUniformLocation("Camera");
             objectDrawLocs.TexCoord = objectDraw.GetAttributionLocation("TexCoordInput");
+            objectDrawLocs.EyePos = objectDraw.GetUniformLocation("EyePos");
+            objectDrawLocs.Time = objectDraw.GetUniformLocation("Time");
             objectDraw.EnableAttribute(objectDrawLocs.Vertex);
             objectDraw.EnableAttribute(objectDrawLocs.TexCoord);
+            objectDraw.Use();
+            objectDraw.SetUniform("Surface", 0);
+            objectDraw.SetUniform("Height", 1);
+            objectDraw.SetUniform("Normal", 2);
+            objectDraw.SetUniform("Cloud", 3);
+            GL.UseProgram(0);
+
+            cloudNoise.BindTo0AndLoadImage("Cloud");
+
+            wallMateria = new Materia("wall");
+            earthMateria = new Materia("grass");
         }
         public void OnDraw()
         {
+            time += 1;
             GL.Viewport(0, 0, Engine.Engine.Window.Width, Engine.Engine.Window.Height);
 
             GL.Enable(EnableCap.DepthTest);
 
+            cloudNoise.Bind(3);
+
             objectDraw.Use();
+            objectDraw.SetUniform(objectDrawLocs.Time,time);
+            earthMateria.Bind();
             earth.OnDraw(objectDrawLocs);
+
+            wallMateria.Bind();
             wall.OnDraw(objectDrawLocs);
 
             GL.Disable(EnableCap.DepthTest);
@@ -51,6 +71,7 @@ namespace Where.Renderer.Renderer3D
 
             objectDraw.Use();
             objectDraw.SetUniform(objectDrawLocs.Camera, ref camera);
+            //objectDraw.SetUniform(objectDrawLocs.EyePos,);
         }
 
         public void SetWallBuffer(List<Point> wallPoints, Point targetPoint)
@@ -68,10 +89,16 @@ namespace Where.Renderer.Renderer3D
             public int
                 Vertex,
                 Camera,
-                TexCoord;
+                TexCoord,
+                EyePos,
+                Time;
         }
         ObjectDrawShaderLocs objectDrawLocs;
 
         Wall wall;
+        float time = 0;
+
+        GLTexture cloudNoise = new GLTexture();
+        readonly Materia wallMateria, earthMateria;
     }
 }

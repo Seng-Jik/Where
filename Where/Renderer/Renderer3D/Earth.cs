@@ -32,12 +32,12 @@ namespace Where.Renderer.Renderer3D
 
             Vector2[] texCoord =
             {
-                new Vector2(0,1),
-                new Vector2(1,0),
-                new Vector2(1,1),
-                new Vector2(0,1),
+                new Vector2(0,100),
+                new Vector2(100,0),
+                new Vector2(100,100),
+                new Vector2(0,100),
                 new Vector2(0,0),
-                new Vector2(1,0),
+                new Vector2(100,0),
 
             };
             earthBuffer.Bind();

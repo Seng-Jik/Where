@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SnowSharp.Graphics.OpenGLES2
+namespace Where.Renderer.Lower
 {
     sealed class SSTReader
     {
