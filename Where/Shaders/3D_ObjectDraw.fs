@@ -8,16 +8,21 @@ uniform sampler2D Tex1;
 uniform sampler2D Tex2;
 uniform sampler2D Tex3;
 
+/** 雾 **/
+float GetDepthFogDensity(){
+	return 1.0-clamp(CameraPos.z / 80.0,0.0,1.0);
+}
 
+float GetHeightFogDensity(){
+	return clamp(WorldPos.y / 100.0,0.0,1.0);
+}
+
+vec4 CalcFog(vec4 color,float density){
+	const vec4 fogColor = vec4(1.0);
+	return mix(fogColor,color,density);
+}
 
 void main(){
-	float densityA = clamp(WorldPos.y / 100.0,0.0,1.0);
-	float densityB = 1.0-clamp(CameraPos.z / 80.0,0.0,1.0);
-	float density = densityA * densityB;
-	vec4 fogColor = vec4(1.0);
 	vec4 color = vec4(sin(TexCoord.x*256.0),cos(512.0*TexCoord.y),1.0,1.0);
-	
-	vec4 foged = mix(fogColor,color,density);
-	
-	gl_FragColor = foged;//mix(foged,color,0.05);
+	gl_FragColor = CalcFog(color,GetHeightFogDensity() * GetDepthFogDensity());
 }
