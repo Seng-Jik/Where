@@ -66,13 +66,20 @@ namespace MapGen
                 map.BlockCells[0, y] = Block.Border;
                 map.BlockCells[map.Width - 1, y] = Block.Border;
             }
-            beg.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
-            beg.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
+            do
+            {
+                beg.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
+                beg.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
+            }while(!pointUseful(beg));
+       
             map.BlockCells[beg.X, beg.Y] = Block.Begin;
             end.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
             end.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
-            /*while ((Math.Abs(end.X-beg.X) + Math.Abs(end.Y+beg.Y))<((map.Width+map.Height)/2))
-            { }*/
+            while ((Math.Abs(end.X-beg.X) + Math.Abs(end.Y-beg.Y))<((map.Width+map.Height)/2) && pointUseful(end))
+            {             
+                end.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
+                end.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
+            }
             map.BlockCells[end.X, end.Y] = Block.Target ;
         }
 
@@ -131,7 +138,16 @@ namespace MapGen
                 }
             }
         }
+        private bool pointUseful(Point p)
+        {
+            if(map.BlockCells[p.X, p.Y]==Block.Empty && 
+               map.BlockCells[p.X, p.Y]!=Block.Wall && 
+               map.BlockCells[p.X, p.Y]!=Block.Border)
+                return true;
+            return false;
+        }
     }
+
 
     public static class MapGen
     {
