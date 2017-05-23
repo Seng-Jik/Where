@@ -23,6 +23,7 @@ namespace Where.Renderer.Renderer2D
             playerShader.EnableAttribute(wallShaderLocs.attrVertex);
             playerShaderLocs.unifCamera = wallShader.GetUniformLocation("Camera");
 
+
             player = new Lower.GLBuffer(BufferTarget.ArrayBuffer);
         }
 
@@ -49,7 +50,7 @@ namespace Where.Renderer.Renderer2D
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedShort, playerTriangle);
         }
 
-        public void SetCamera(float angle, Vector2 pos)
+        public void SetCamera(float angle,float pov, Vector2 pos)
         {
             
             var camera = Matrix4.Identity;

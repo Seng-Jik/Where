@@ -34,30 +34,19 @@ vec4 CalcFog(vec4 color,float density){
 	const vec4 fogColor = vec4(0.0);
 	return mix(fogColor,color,density);
 }
-/*
-vec2 ParallaxUvDelta(v2f i)
+
+vec2 ParallaxUvDelta()
 {
-    // 高度图中描述的高度数据
     float h = texture2D(Height, TexCoord).r;
-    // 切线空间中的视线方向
-    float3 viewDir = normalize(i.viewDir);
-    // 将三维的视线向量投影到二维的 uv 平面，乘以高度数据
-    // _ParallaxScale 是一个用户可调节的值，根据效果需要进行调节，数值太大造成视觉上的严重错误
-    float2 delta = viewDir.xy / viewDir.z * h * _ParallaxScale;
+    vec3 viewDir = (normalize(EyePos - WorldPos));
+	const float _ParallaxScale = 0.001;
+    vec2 delta = viewDir.xy / viewDir.z * h * _ParallaxScale;
     return delta;
 }
-*/
+
 
 void main(){
-	vec4 color = texture2D(Surface,TexCoord);
-	gl_FragColor = CalcFog(color,GetDepthFogDensity()) * vec4(0.30,0.30,0.35,1.0);
-	/*gl_FragColor *= vec4(0.752941176470588,0.752941176470588,0.752941176470588,1.0);
-	gl_FragColor *= 1.5;
-	
-	float y = WorldPos.y / 450.0;
-	
-	gl_FragColor += vec4(0.752941176470588,0.752941176470588,0.752941176470588,1.0) * y;*/
-	//gl_FragColor = color;
-	//gl_FragColor = CalcFog(color,GetDepthFogDensity());
+	vec4 color = texture2D(Surface,TexCoord - ParallaxUvDelta());
+	gl_FragColor = color;
 	
 }

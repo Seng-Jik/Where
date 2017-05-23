@@ -68,6 +68,7 @@
     <Compile Include="Renderer\Renderer3D\Earth.cs" />
     <Compile Include="Renderer\Renderer3D\Materia.cs" />
     <Compile Include="Renderer\Renderer3D\Renderer3D.cs" />
+    <Compile Include="Renderer\Renderer3D\SkyBox.cs" />
     <Compile Include="Renderer\Renderer3D\Wall.cs" />
   </ItemGroup>
   <ItemGroup>

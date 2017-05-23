@@ -18,8 +18,12 @@ namespace Where.Game
         public override void OnUpdate()
         {
             LastPosition = Position;
-            renderer.SetCamera(angle,Position);
-            angle += Input.Roller.XMove / 4;
+            renderer.SetCamera(angle,pov,Position);
+            angle += Input.Roller.XDelta / 4;
+            pov += Input.Roller.YDelta / 4;
+
+            if (pov > 45) pov = 45;
+            else if (pov < -45) pov = -45;
 
             var s = Input.Runner.State;
 
@@ -47,7 +51,7 @@ namespace Where.Game
 
         public Vector2 Position { get; set; }
         public Vector2 LastPosition { get; private set; }
-        float angle,speed;
+        float angle,speed,pov;
         readonly Renderer.IRenderer renderer;
     }
 }

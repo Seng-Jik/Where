@@ -14,10 +14,14 @@ namespace Where.Input
             Engine.Engine.Window.Mouse.ButtonUp += (obj, arg) => leftButton = false;
 
 
-            Engine.Engine.Window.Mouse.Move += (obj, arg) => mouseXDelta = arg.XDelta;
+            Engine.Engine.Window.Mouse.Move += (obj, arg) =>
+            {
+                mouseXDelta = arg.XDelta;
+                mouseYDelta = arg.YDelta;
+            };
         }
 
-        public static float XMove
+        public static float XDelta
         {
             get
             {
@@ -27,7 +31,17 @@ namespace Where.Input
             }
         }
 
-        static float mouseXDelta;
+        public static float YDelta
+        {
+            get
+            {
+                var ret = leftButton ? mouseYDelta : 0;
+                mouseYDelta = 0;
+                return -ret;
+            }
+        }
+
+        static float mouseXDelta, mouseYDelta;
         static bool leftButton = false;
     }
 }

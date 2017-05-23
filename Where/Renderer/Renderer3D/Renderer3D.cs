@@ -14,6 +14,8 @@ namespace Where.Renderer.Renderer3D
     {
         public Renderer3D()
         {
+            Projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 1.7F, Engine.Engine.Window.Height / ((float)Engine.Engine.Window.Width), 0.1F, 1000.0F);
+
             objectDrawLocs.Vertex = objectDraw.GetAttributionLocation("Vertex");
             objectDrawLocs.Camera = objectDraw.GetUniformLocation("Camera");
             objectDrawLocs.TexCoord = objectDraw.GetAttributionLocation("TexCoordInput");
@@ -38,15 +40,22 @@ namespace Where.Renderer.Renderer3D
             time += 1;
             GL.Viewport(0, 0, Engine.Engine.Window.Width, Engine.Engine.Window.Height);
 
+
             GL.Enable(EnableCap.DepthTest);
 
+
             cloudNoise.Bind(3);
+            sky.OnDraw();
 
             objectDraw.Use();
             objectDraw.SetUniform(objectDrawLocs.Time,time);
+
+            
+
             earthMateria.Bind();
             earth.OnDraw(objectDrawLocs);
 
+            //此处绘制墙体
             wallMateria.Bind();
             wall.OnDraw(objectDrawLocs);
 
@@ -56,22 +65,22 @@ namespace Where.Renderer.Renderer3D
             renderer2d.OnDraw();
         }
 
-        public void SetCamera(float angle, Vector2 pos)
+        public void SetCamera(float angle,float pov, Vector2 pos)
         {
-            renderer2d.SetCamera(angle, pos);
+            renderer2d.SetCamera(angle,pov, pos);
 
-            var camera = Matrix4.Identity;
+            var eyePos = new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y);
+            Camera = Matrix4.CreateTranslation(eyePos) * Matrix4.CreateRotationY((float)((angle + 180) * Math.PI / 180));
 
-            camera *= Matrix4.CreateTranslation(new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y));
-            camera *= Matrix4.CreateRotationY((float)((angle + 180) * Math.PI / 180));
+            Matrix4 camera = Camera * Projection;
 
-            camera *= Matrix4.CreatePerspectiveFieldOfView((float)Math.PI/1.7F, Engine.Engine.Window.Height / ((float)Engine.Engine.Window.Width), 0.1F, 1000.0F);
+            sky.SetPos(pos,this);
 
-
+           
 
             objectDraw.Use();
             objectDraw.SetUniform(objectDrawLocs.Camera, ref camera);
-            //objectDraw.SetUniform(objectDrawLocs.EyePos,);
+            objectDraw.SetUniform(objectDrawLocs.EyePos, eyePos);
         }
 
         public void SetWallBuffer(List<Point> wallPoints, Point targetPoint)
@@ -79,6 +88,9 @@ namespace Where.Renderer.Renderer3D
             renderer2d.SetWallBuffer(wallPoints, targetPoint);
             wall = new Wall(wallPoints);
         }
+
+        public Matrix4 Projection { get; private set; }
+        public Matrix4 Camera { get; private set; }
 
         Renderer2D.Renderer2D renderer2d = new Renderer2D.Renderer2D();
         Earth earth = new Earth();
@@ -100,5 +112,9 @@ namespace Where.Renderer.Renderer3D
 
         GLTexture cloudNoise = new GLTexture();
         readonly Materia wallMateria, earthMateria;
+
+        SkyBox sky = new SkyBox();
+
+
     }
 }

@@ -56,6 +56,11 @@ namespace Where.Renderer.Lower
             GL.Uniform1(loc, v);
         }
 
+        public void SetUniform(int loc, Vector3 v)
+        {
+            GL.Uniform3(loc, v);
+        }
+
         public void SetUniform(string name,int i)
         {
             GL.Uniform1(GetUniformLocation(name), i);
