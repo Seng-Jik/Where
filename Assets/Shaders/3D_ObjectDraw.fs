@@ -39,7 +39,7 @@ vec2 ParallaxUvDelta()
 {
     float h = texture2D(Height, TexCoord).r;
     vec3 viewDir = (normalize(EyePos - WorldPos));
-	const float _ParallaxScale = 0.001;
+	const float _ParallaxScale = 0.0025;
     vec2 delta = viewDir.xy / viewDir.z * h * _ParallaxScale;
     return delta;
 }

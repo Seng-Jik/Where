@@ -16,31 +16,45 @@ namespace Where.Renderer.Renderer3D
             time = 0;
             Vector3[] vertData =
             {
-                new Vector3(-500.0f,200.0f,-500.0f),
-                new Vector3(-500.0f,200.0f,500.0f),
-                new Vector3(500.0f,200.0f,500.0f),
-                new Vector3(500.0f,200.0f,-500.0f),
+                new Vector3(-500.0f,250.0f,-500.0f),
+                new Vector3(-500.0f,250.0f,500.0f),
+                new Vector3(500.0f,250.0f,500.0f),
+                new Vector3(500.0f,250.0f,-500.0f),
+
+                new Vector3(-500.0f,-250f,-500.0f),
+                new Vector3(-500.0f,-250f,500.0f),
+                new Vector3(500.0f,-250f,500.0f),
+                new Vector3(500.0f,-250f,-500.0f),
             };
 
             verticles.Bind();
-            verticles.BufferData(3 * sizeof(float) * 4, vertData, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);
+            verticles.BufferData(3 * sizeof(float) * 8, vertData, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);
 
             Vector2[] texCoordData =
             {
                 new Vector2(1,1),
                 new Vector2(0,1),
                 new Vector2(0,0),
-                new Vector2(1,0)
+                new Vector2(1,0),
+
+                new Vector2(1,0),
+                new Vector2(1,1),
+                new Vector2(0,1),
+                new Vector2(0,0)
             };
             texCoord.Bind();
-            texCoord.BufferData(2 * sizeof(float) * 4, texCoordData, BufferUsageHint.StaticDraw);
+            texCoord.BufferData(2 * sizeof(float) * 8, texCoordData, BufferUsageHint.StaticDraw);
 
             ushort[] indData =
             {
-                2,1,0,3,2,0
+                2,1,0,3,2,0,
+                3,6,2,3,7,6,
+                1,4,0,1,5,4,
+                2,5,1,2,6,5,
+                7,3,0,4,7,0
             };
             indices.Bind();
-            indices.BufferData(6 * sizeof(ushort), indData, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);
+            indices.BufferData(6 * sizeof(ushort) * 5, indData, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);
 
             skyTopShader = new GLShader("3D_SkyBoxVertex", "3D_SkyBox");
             skyTopShader.Use();
@@ -50,6 +64,7 @@ namespace Where.Renderer.Renderer3D
             skyTopShader.EnableAttribute(topLocs.TexCoord);
             topLocs.Camera = skyTopShader.GetUniformLocation("Camera");
             topLocs.Time = skyTopShader.GetUniformLocation("Time");
+            topLocs.EyePos = skyTopShader.GetUniformLocation("EyePos");
             skyTopShader.SetUniform("Perlin", 3);
 
             GL.UseProgram(0);
@@ -64,18 +79,20 @@ namespace Where.Renderer.Renderer3D
             texCoord.Bind();
             GL.VertexAttribPointer(topLocs.TexCoord, 2, VertexAttribPointerType.Float, false, 0, 0);
             indices.Bind();
-            GL.DrawElements(BeginMode.Triangles, 6,DrawElementsType.UnsignedShort, 0);
+            GL.DrawElements(BeginMode.Triangles, 6 * 5,DrawElementsType.UnsignedShort, 0);
             GL.UseProgram(0);
         }
 
         public void SetPos(Vector2 pos,Renderer3D rnd)
         {
             time++;
+            var eyePos = new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y);
             var modelview = Matrix4.CreateTranslation(new Vector3(21.0F * pos.X, 0, -21.0F * pos.Y));
             var transform = modelview * rnd.Camera * rnd.Projection;
 
             skyTopShader.Use();
             skyTopShader.SetUniform(topLocs.Camera, ref transform);
+            skyTopShader.SetUniform(topLocs.EyePos, eyePos);
             GL.UseProgram(0);
         }
 
@@ -92,6 +109,7 @@ namespace Where.Renderer.Renderer3D
                 Camera,
                 Vertex,
                 TexCoord,
+                EyePos,
                 Time;
         }
 
