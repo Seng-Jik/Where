@@ -17,16 +17,19 @@ namespace Where.Renderer.Renderer3D
             Projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 1.7F, Engine.Engine.Window.Height / ((float)Engine.Engine.Window.Width), 0.1F, 1000.0F);
 
             objectDrawLocs.Vertex = objectDraw.GetAttributionLocation("Vertex");
+            objectDrawLocs.Normal = objectDraw.GetUniformLocation("Normal");
             objectDrawLocs.Camera = objectDraw.GetUniformLocation("Camera");
             objectDrawLocs.TexCoord = objectDraw.GetAttributionLocation("TexCoordInput");
             objectDrawLocs.EyePos = objectDraw.GetUniformLocation("EyePos");
             objectDrawLocs.Time = objectDraw.GetUniformLocation("Time");
+            objectDrawLocs.TBNMatrix = objectDraw.GetUniformLocation("TBNMatrix");
+
             objectDraw.EnableAttribute(objectDrawLocs.Vertex);
             objectDraw.EnableAttribute(objectDrawLocs.TexCoord);
             objectDraw.Use();
             objectDraw.SetUniform("Surface", 0);
             objectDraw.SetUniform("Height", 1);
-            objectDraw.SetUniform("Normal", 2);
+            objectDraw.SetUniform("NormalMap", 2);
             objectDraw.SetUniform("Cloud", 3);
             GL.UseProgram(0);
 
@@ -53,11 +56,11 @@ namespace Where.Renderer.Renderer3D
             
 
             earthMateria.Bind();
-            earth.OnDraw(objectDrawLocs);
+            earth.OnDraw(objectDraw,objectDrawLocs);
 
             //此处绘制墙体
             wallMateria.Bind();
-            wall.OnDraw(objectDrawLocs);
+            wall.OnDraw(objectDraw, objectDrawLocs);
 
             GL.Disable(EnableCap.DepthTest);
 
@@ -89,6 +92,12 @@ namespace Where.Renderer.Renderer3D
             wall = new Wall(wallPoints);
         }
 
+        public static Matrix3 GetTBNMatrix(Vector3 N,Vector3 T)
+        {
+            Vector3 B = OpenTK.Vector3.Cross(N, T);
+            return new Matrix3(T, B, N);
+        }
+
         public Matrix4 Projection { get; private set; }
         public Matrix4 Camera { get; private set; }
 
@@ -100,9 +109,11 @@ namespace Where.Renderer.Renderer3D
         {
             public int
                 Vertex,
+                Normal,
                 Camera,
                 TexCoord,
                 EyePos,
+                TBNMatrix,
                 Time;
         }
         ObjectDrawShaderLocs objectDrawLocs;

@@ -45,8 +45,11 @@ namespace Where.Renderer.Renderer3D
             texCoordBuffer.Bind();
             texCoordBuffer.BufferData(2 * 6 * sizeof(float), texCoord, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);
         }
-        public void OnDraw(Renderer3D.ObjectDrawShaderLocs locs)
+        public void OnDraw(GLShader shader,Renderer3D.ObjectDrawShaderLocs locs)
         {
+            shader.SetUniform(locs.Normal, new Vector3(0, 1, 0));
+            Matrix3 tbn = Renderer3D.GetTBNMatrix(new Vector3(0, 1, 0), new Vector3(1, 0, 1));
+            shader.SetUniform(locs.TBNMatrix, ref tbn);
             earthBuffer.Bind();
             GL.VertexAttribPointer(locs.Vertex, 3, VertexAttribPointerType.Float, false, 0, 0);
             texCoordBuffer.Bind();

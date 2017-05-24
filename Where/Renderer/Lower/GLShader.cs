@@ -46,9 +46,14 @@ namespace Where.Renderer.Lower
             return GL.GetAttribLocation(programHandle,attrib);
         }
 
-        public void SetUniform(int loc,ref Matrix4 mat4)
+        public void SetUniform(int loc, ref Matrix4 mat4)
         {
             GL.UniformMatrix4(loc, false, ref mat4);
+        }
+
+        public void SetUniform(int loc, ref Matrix3 mat3)
+        {
+            GL.UniformMatrix3(loc, false, ref mat3);
         }
 
         public void SetUniform(int loc, float v)
