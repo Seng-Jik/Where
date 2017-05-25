@@ -127,6 +127,7 @@ namespace Where.Renderer.Renderer3D
 
         SkyBox sky = new SkyBox();
 
+        DayNight dayNight = new DayNight();
 
     }
 }

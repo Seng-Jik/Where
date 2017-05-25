@@ -53,15 +53,29 @@ vec4 CalcFog(vec4 color,float density){
 	return mix(fogColor,color,density);
 }
 
-/** 玩家的光照 **/
-vec3 PlayerLighting(vec4 diffColor,vec3 normal,float diffFactor)
+/** 天空光照 **/
+vec3 SkyLighting(vec3 diffColor,vec3 normal,float diffFactor)
 {
-	float dis = distance(EyePos,WorldPos);
-	float lightMul = 1.0-clamp(dis,0.0,50.0)/50.0;
+	vec3 dir = WorldPos - vec3(5000.0,200.0,5000.0);
 
-	vec3 L = normalize(EyePos - WorldPos);
-	float diff = 1.0-abs(dot(normal , L));
-	vec3 color = lightMul * diff * diffFactor * diffColor.rgb;
+	vec3 L = normalize(dir);
+	L.z = -L.z;
+	float diff = max(0.001,dot(normal , L));
+	vec3 color = diff * diffFactor * diffColor * 0.25;
+	color += 0.75 * diffColor;
+	return vec3(color);
+}
+
+/** 玩家的光照 **/
+vec3 PlayerLighting(vec3 diffColor,vec3 normal,float diffFactor)
+{
+	vec3 dir = WorldPos - EyePos;
+	float dis = distance(WorldPos,EyePos);
+	float lightMul = 1.0-clamp(dis,0.0,100.0)/100.0;
+
+	vec3 L = normalize(dir);
+	float diff = clamp(1.5*(1.0-abs(dot(normal , L))),0.0,1.0) * 0.25;
+	vec3 color = lightMul * lightMul * diff * diffFactor * diffColor;
 	return vec3(color);
 }
 
@@ -70,9 +84,10 @@ vec3 PlayerLighting(vec4 diffColor,vec3 normal,float diffFactor)
 
 void main(){
 	vec2 texCoord = CalcFinalCoord();
-	vec4 color = texture2D(Surface,texCoord);
+	vec3 diffColor = texture2D(Surface,texCoord).rgb;
 	vec3 normal = CalcFinalNormal(texCoord);
 
-	color = vec4(PlayerLighting(color,normal,1.0),1.0);
-	gl_FragColor = color;
+	vec3 color = SkyLighting(diffColor,normal,1.0);
+	//color += PlayerLighting(diffColor,normal,1.0);
+	gl_FragColor = vec4(color,1.0);
 }

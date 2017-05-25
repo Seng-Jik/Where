@@ -128,14 +128,14 @@ namespace Where.Renderer.Renderer3D
             indicesBack.Bind();
             GL.DrawElements(BeginMode.Triangles, vecSize, DrawElementsType.UnsignedShort, 0);
 
-            shader.SetUniform(locs.Normal, new Vector3(1, 0, 0));
-            tbn = Renderer3D.GetTBNMatrix(new Vector3(1, 0, 0), new Vector3(0, 1, 1));
+            shader.SetUniform(locs.Normal, new Vector3(-1, 0, 0));
+            tbn = Renderer3D.GetTBNMatrix(new Vector3(-1, 0, 0), new Vector3(0, 1, 1));
             shader.SetUniform(locs.TBNMatrix, ref tbn);
             indicesLeft.Bind();
             GL.DrawElements(BeginMode.Triangles, vecSize, DrawElementsType.UnsignedShort, 0);
 
-            shader.SetUniform(locs.Normal, new Vector3(-1, 0, 0));
-            tbn = Renderer3D.GetTBNMatrix(new Vector3(-1, 0, 0), new Vector3(0, 1, 1));
+            shader.SetUniform(locs.Normal, new Vector3(1, 0, 0));
+            tbn = Renderer3D.GetTBNMatrix(new Vector3(1, 0, 0), new Vector3(0, -1, -1));
             shader.SetUniform(locs.TBNMatrix, ref tbn);
             indicesRight.Bind();
             GL.DrawElements(BeginMode.Triangles, vecSize, DrawElementsType.UnsignedShort, 0);
