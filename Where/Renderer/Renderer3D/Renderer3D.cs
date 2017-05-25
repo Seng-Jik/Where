@@ -24,6 +24,7 @@ namespace Where.Renderer.Renderer3D
             objectDrawLocs.Time = objectDraw.GetUniformLocation("Time");
             objectDrawLocs.TBNMatrix = objectDraw.GetUniformLocation("TBNMatrix");
             objectDrawLocs.SkyColor = objectDraw.GetUniformLocation("SkyColor");
+            objectDrawLocs.SunColor = objectDraw.GetUniformLocation("SunColor");
 
             objectDraw.EnableAttribute(objectDrawLocs.Vertex);
             objectDraw.EnableAttribute(objectDrawLocs.TexCoord);
@@ -35,6 +36,7 @@ namespace Where.Renderer.Renderer3D
 
             //TODO:测试的入射光
             objectDraw.SetUniform(objectDrawLocs.SkyColor, new Vector3(0.811764705882353F, 0.996078431372549F, 0.992156862745098F));
+            objectDraw.SetUniform(objectDrawLocs.SunColor, new Vector3(1, 1, 1));
 
             GL.UseProgram(0);
 
@@ -121,6 +123,7 @@ namespace Where.Renderer.Renderer3D
                 EyePos,
                 TBNMatrix,
                 SkyColor,
+                SunColor,
                 Time;
         }
         ObjectDrawShaderLocs objectDrawLocs;
