@@ -17,7 +17,7 @@ uniform float Time;
 vec2 ParallaxUvDelta()
 {
     float h = texture2D(Height, TexCoord).r;
-    vec3 viewDir = (normalize(EyePos - WorldPos));
+    vec3 viewDir = (normalize(-EyePos - WorldPos));
 	const float _ParallaxScale = 0.0025;
     vec2 delta = viewDir.xy / viewDir.z * h * _ParallaxScale;
     return delta;
@@ -56,12 +56,15 @@ vec4 CalcFog(vec4 color,float density){
 /** 光照 **/
 vec3 Lighting(vec4 diffColor,vec3 normal,vec3 lightPos,float ambFactor,float diffFactor)
 {
-	vec3 L = normalize(lightPos - WorldPos);
-	float diff = max(dot(normal , L) , 0.0);
+	float dis = distance(lightPos,WorldPos);
+	float lightMul = 1.0-clamp(dis,0.0,50.0)/50.0;
+
+	vec3 L = normalize(EyePos - WorldPos);
+	float diff = 1.0-abs(dot(normal , L));
 	vec3 color = vec3(0.0);
 	color += ambFactor * diffColor.rgb;
-	color += diff * diffFactor * diffColor.rgb;
-	return color;
+	color += lightMul * diff * diffFactor * diffColor.rgb;
+	return vec3(color);
 }
 
 
@@ -70,6 +73,6 @@ void main(){
 	vec4 color = texture2D(Surface,texCoord);
 	vec3 normal = CalcFinalNormal(texCoord);
 
-	color = vec4(Lighting(color,normal,vec3(200.0f,200.0f,200.0f),0.65,0.35),1.0);
+	color = vec4(Lighting(color,normal,EyePos,0.0,1.0),1.0);
 	gl_FragColor = color;
 }

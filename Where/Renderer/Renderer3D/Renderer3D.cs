@@ -83,6 +83,7 @@ namespace Where.Renderer.Renderer3D
 
             objectDraw.Use();
             objectDraw.SetUniform(objectDrawLocs.Camera, ref camera);
+            eyePos = new Vector3(21.0F * pos.X, 20.0F, -21.0F * pos.Y);
             objectDraw.SetUniform(objectDrawLocs.EyePos, eyePos);
         }
 
