@@ -8,6 +8,8 @@ uniform sampler2D Perlin;
 uniform vec3 EyePos;
 
 
+
+
 /** 云 **/
 float Shape(float color){	//加强云层形状
 	return pow(sin(color * 3.1415926),3.0);

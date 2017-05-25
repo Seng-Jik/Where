@@ -13,6 +13,8 @@ uniform mat3 TBNMatrix;
 uniform vec3 EyePos;
 uniform float Time;
 
+uniform vec3 SkyColor;
+
 /** 视差贴图 **/
 vec2 ParallaxUvDelta()
 {
@@ -62,7 +64,7 @@ vec3 SkyLighting(vec3 diffColor,vec3 normal,float diffFactor)
 	L.z = -L.z;
 	float diff = max(0.001,dot(normal , L));
 	vec3 color = diff * diffFactor * diffColor * 0.25;
-	color += 0.75 * diffColor;
+	color += 0.75 * diffColor * SkyColor;
 	return vec3(color);
 }
 

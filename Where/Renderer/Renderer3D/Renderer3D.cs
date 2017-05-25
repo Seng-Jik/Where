@@ -23,6 +23,7 @@ namespace Where.Renderer.Renderer3D
             objectDrawLocs.EyePos = objectDraw.GetUniformLocation("EyePos");
             objectDrawLocs.Time = objectDraw.GetUniformLocation("Time");
             objectDrawLocs.TBNMatrix = objectDraw.GetUniformLocation("TBNMatrix");
+            objectDrawLocs.SkyColor = objectDraw.GetUniformLocation("SkyColor");
 
             objectDraw.EnableAttribute(objectDrawLocs.Vertex);
             objectDraw.EnableAttribute(objectDrawLocs.TexCoord);
@@ -31,6 +32,10 @@ namespace Where.Renderer.Renderer3D
             objectDraw.SetUniform("Height", 1);
             objectDraw.SetUniform("NormalMap", 2);
             objectDraw.SetUniform("Cloud", 3);
+
+            //TODO:测试的入射光
+            objectDraw.SetUniform(objectDrawLocs.SkyColor, new Vector3(0.811764705882353F, 0.996078431372549F, 0.992156862745098F));
+
             GL.UseProgram(0);
 
             cloudNoise.BindTo0AndLoadImage("Cloud");
@@ -115,6 +120,7 @@ namespace Where.Renderer.Renderer3D
                 TexCoord,
                 EyePos,
                 TBNMatrix,
+                SkyColor,
                 Time;
         }
         ObjectDrawShaderLocs objectDrawLocs;
