@@ -53,19 +53,19 @@ vec4 CalcFog(vec4 color,float density){
 	return mix(fogColor,color,density);
 }
 
-/** 光照 **/
-vec3 Lighting(vec4 diffColor,vec3 normal,vec3 lightPos,float ambFactor,float diffFactor)
+/** 玩家的光照 **/
+vec3 PlayerLighting(vec4 diffColor,vec3 normal,float diffFactor)
 {
-	float dis = distance(lightPos,WorldPos);
+	float dis = distance(EyePos,WorldPos);
 	float lightMul = 1.0-clamp(dis,0.0,50.0)/50.0;
 
 	vec3 L = normalize(EyePos - WorldPos);
 	float diff = 1.0-abs(dot(normal , L));
-	vec3 color = vec3(0.0);
-	color += ambFactor * diffColor.rgb;
-	color += lightMul * diff * diffFactor * diffColor.rgb;
+	vec3 color = lightMul * diff * diffFactor * diffColor.rgb;
 	return vec3(color);
 }
+
+/** 太阳光照 **/
 
 
 void main(){
@@ -73,6 +73,6 @@ void main(){
 	vec4 color = texture2D(Surface,texCoord);
 	vec3 normal = CalcFinalNormal(texCoord);
 
-	color = vec4(Lighting(color,normal,EyePos,0.0,1.0),1.0);
+	color = vec4(PlayerLighting(color,normal,1.0),1.0);
 	gl_FragColor = color;
 }
