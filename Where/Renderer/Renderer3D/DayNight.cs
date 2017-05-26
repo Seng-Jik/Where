@@ -9,7 +9,7 @@ namespace Where.Renderer.Renderer3D
 {
     class DayNight
     {
-        public double Clock { get; private set; } = 7.0;
+        public double Clock { get; private set; } = 3.0;
         public Vector3 SkyColorA { get; private set; }
         public Vector3 SkyColorB { get; private set; }
         public float CloudDensity { get; private set; }
