@@ -7,8 +7,9 @@ uniform float Time;
 uniform sampler2D Perlin;
 uniform vec3 EyePos;
 
-
-
+uniform vec3 SkyColorA;
+uniform vec3 SkyColorB;
+uniform float CloudDensity;
 
 /** 云 **/
 float Shape(float color){	//加强云层形状
@@ -30,18 +31,10 @@ float Cloud(vec2 cloudCoord){	//计算云层系数
 	return Shape(color * 2.0);
 }
 
-/** 天空底色 **/
-vec3 SkyColorA(){	//亮色
-	return vec3(0.4, 0.7, 1.0);
-}
-
-vec3 SkyColorB(){	//暗色
-	return vec3(0.2, 0.4, 0.6);
-}
 
 vec3 CalcSkyColor(vec2 sunCoord){	//计算颜色，传入发光中心
 	float d = distance(TexCoord,sunCoord);
-	return mix(SkyColorA(),SkyColorB(),d);
+	return mix(SkyColorA,SkyColorB,d);
 }
 
 void main(){
@@ -50,7 +43,7 @@ void main(){
 	
 	//云
 	float cloudDens = Cloud(TexCoord);
-	color = mix(color,vec3(1.0),cloudDens);
+	color = mix(color,vec3(1.0),cloudDens * CloudDensity);
 	
 	
 	gl_FragColor = vec4(color,1.0);

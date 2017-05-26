@@ -25,6 +25,8 @@ namespace Where.Renderer.Renderer3D
             objectDrawLocs.TBNMatrix = objectDraw.GetUniformLocation("TBNMatrix");
             objectDrawLocs.SkyColor = objectDraw.GetUniformLocation("SkyColor");
             objectDrawLocs.SunColor = objectDraw.GetUniformLocation("SunColor");
+            objectDrawLocs.PlayerLight = objectDraw.GetUniformLocation("PlayerLight");
+            objectDrawLocs.SunLightPos = objectDraw.GetUniformLocation("SunLightPos");
 
             objectDraw.EnableAttribute(objectDrawLocs.Vertex);
             objectDraw.EnableAttribute(objectDrawLocs.TexCoord);
@@ -34,9 +36,6 @@ namespace Where.Renderer.Renderer3D
             objectDraw.SetUniform("NormalMap", 2);
             objectDraw.SetUniform("Cloud", 3);
 
-            //TODO:测试的入射光
-            objectDraw.SetUniform(objectDrawLocs.SkyColor, new Vector3(0.811764705882353F, 0.996078431372549F, 0.992156862745098F));
-            objectDraw.SetUniform(objectDrawLocs.SunColor, new Vector3(1, 1, 1));
 
             GL.UseProgram(0);
 
@@ -55,7 +54,7 @@ namespace Where.Renderer.Renderer3D
 
 
             cloudNoise.Bind(3);
-            sky.OnDraw();
+            sky.OnDraw(dayNight);
 
             objectDraw.Use();
             objectDraw.SetUniform(objectDrawLocs.Time,time);
@@ -77,6 +76,7 @@ namespace Where.Renderer.Renderer3D
 
         public void SetCamera(float angle,float pov, Vector2 pos)
         {
+            dayNight.Update();
             renderer2d.SetCamera(angle,pov, pos);
 
             var eyePos = new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y);
@@ -92,6 +92,11 @@ namespace Where.Renderer.Renderer3D
             objectDraw.SetUniform(objectDrawLocs.Camera, ref camera);
             eyePos = new Vector3(21.0F * pos.X, 20.0F, -21.0F * pos.Y);
             objectDraw.SetUniform(objectDrawLocs.EyePos, eyePos);
+
+            objectDraw.SetUniform(objectDrawLocs.SkyColor, dayNight.SkyColorA);
+            objectDraw.SetUniform(objectDrawLocs.SunColor, dayNight.SkyColorB);
+            objectDraw.SetUniform(objectDrawLocs.PlayerLight, dayNight.PlayerLight);
+            objectDraw.SetUniform(objectDrawLocs.SunLightPos, dayNight.SunLightPos);
         }
 
         public void SetWallBuffer(List<Point> wallPoints, Point targetPoint)
@@ -124,6 +129,8 @@ namespace Where.Renderer.Renderer3D
                 TBNMatrix,
                 SkyColor,
                 SunColor,
+                PlayerLight,
+                SunLightPos,
                 Time;
         }
         ObjectDrawShaderLocs objectDrawLocs;

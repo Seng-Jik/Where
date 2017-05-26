@@ -15,6 +15,8 @@ uniform float Time;
 
 uniform vec3 SkyColor;
 uniform vec3 SunColor;
+uniform float PlayerLight;
+uniform vec3 SunLightPos;
 
 /** 视差贴图 **/
 vec2 ParallaxUvDelta()
@@ -41,7 +43,8 @@ vec3 CalcFinalNormal(vec2 finalCoord)
 
 /** 雾 **/
 //深度雾的浓度
-float GetDepthFogDensity(){
+float GetDepthFogDensity()
+{
 	const float LOG2 = 1.442695;
 	float fogFactor = 1.0-clamp(CameraPos.z / 160.0,0.0,1.0);
 	fogFactor = exp2( -fogFactor *  fogFactor * fogFactor * LOG2 );
@@ -50,19 +53,22 @@ float GetDepthFogDensity(){
 	return 1.0-fogFactor;
 }
 
+float GetHeightFogDensity()
+{
+	return clamp(WorldPos.y / 20.0,0.0,0.5) * texture2D(Cloud,WorldPos.xz / 100.0).a;
+}
+
 //计算雾的颜色
-vec4 CalcFog(vec4 color,float density){
-	const vec4 fogColor = vec4(0.0);
-	return mix(fogColor,color,density);
+vec3 CalcFog(vec3 color,float density){
+	return mix(vec3(SkyColor / 2.0),color,density);
 }
 
 /** 天空光照 **/
 vec3 SkyLighting(vec3 diffColor,vec3 normal,float diffFactor)
 {
-	vec3 dir = WorldPos - vec3(5000.0,200.0,5000.0);
+	vec3 dir = WorldPos - SunLightPos;
 
 	vec3 L = normalize(dir);
-	L.z = -L.z;
 	float diff = max(0.001,dot(normal , L));
 	vec3 color = diff * diffFactor * diffColor * 0.25 * SunColor;
 	color += 0.75 * diffColor * SkyColor;
@@ -72,25 +78,20 @@ vec3 SkyLighting(vec3 diffColor,vec3 normal,float diffFactor)
 /** 玩家的光照 **/
 vec3 PlayerLighting(vec3 diffColor,vec3 normal,float diffFactor)
 {
-	vec3 dir = WorldPos - EyePos;
 	float dis = distance(WorldPos,EyePos);
-	float lightMul = 1.0-clamp(dis,0.0,100.0)/100.0;
+	float lightMul = 1.0-clamp(dis,0.0,50.0)/50.0;
 
-	vec3 L = normalize(dir);
-	float diff = clamp(1.5*(1.0-abs(dot(normal , L))),0.0,1.0) * 0.25;
-	vec3 color = lightMul * lightMul * diff * diffFactor * diffColor;
-	return vec3(color);
+	return vec3(lightMul * lightMul * diffColor) * PlayerLight;
 }
 
-/** 太阳光照 **/
 
 
 void main(){
 	vec2 texCoord = CalcFinalCoord();
-	vec3 diffColor = texture2D(Surface,texCoord).rgb;
+	vec3 diffColor = texture2D(Surface,texCoord).rgb - 0.06*vec3(texture2D(Cloud,texCoord.yx).a);
 	vec3 normal = CalcFinalNormal(texCoord);
-
+	
 	vec3 color = SkyLighting(diffColor,normal,1.0);
-	//color += PlayerLighting(diffColor,normal,1.0);
+	color += PlayerLighting(diffColor,normal,1.0);
 	gl_FragColor = vec4(color,1.0);
 }

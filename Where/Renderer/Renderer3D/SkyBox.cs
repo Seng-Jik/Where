@@ -65,15 +65,21 @@ namespace Where.Renderer.Renderer3D
             topLocs.Camera = skyTopShader.GetUniformLocation("Camera");
             topLocs.Time = skyTopShader.GetUniformLocation("Time");
             topLocs.EyePos = skyTopShader.GetUniformLocation("EyePos");
+            topLocs.SkyColorA = skyTopShader.GetUniformLocation("SkyColorA");
+            topLocs.SkyColorB = skyTopShader.GetUniformLocation("SkyColorB");
+            topLocs.CloudDensity = skyTopShader.GetUniformLocation("CloudDensity");
             skyTopShader.SetUniform("Perlin", 3);
 
             GL.UseProgram(0);
         }
 
-        public void OnDraw()
+        public void OnDraw(DayNight dayNight)
         {
             skyTopShader.Use();
             skyTopShader.SetUniform(topLocs.Time, time);
+            skyTopShader.SetUniform(topLocs.SkyColorA, dayNight.SkyColorA);
+            skyTopShader.SetUniform(topLocs.SkyColorB, dayNight.SkyColorB);
+            skyTopShader.SetUniform(topLocs.CloudDensity, dayNight.CloudDensity);
             verticles.Bind();
             GL.VertexAttribPointer(topLocs.Vertex, 3, VertexAttribPointerType.Float, false, 0, 0);
             texCoord.Bind();
@@ -110,6 +116,9 @@ namespace Where.Renderer.Renderer3D
                 Vertex,
                 TexCoord,
                 EyePos,
+                SkyColorA,
+                SkyColorB,
+                CloudDensity,
                 Time;
         }
 
