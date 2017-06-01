@@ -69,17 +69,14 @@ namespace MapGen
             do
             {
                 beg.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
-                beg.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
-            }while(!pointUseful(beg));
-       
+                beg.Y = rnd2.Next((map.Height - 1) / 2) * 2 + 1;
+            }while(map.BlockCells[beg.X,beg.Y]!=Block.Empty);
             map.BlockCells[beg.X, beg.Y] = Block.Begin;
-            end.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
-            end.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
-            while ((Math.Abs(end.X-beg.X) + Math.Abs(end.Y-beg.Y))<((map.Width+map.Height)/2) && pointUseful(end))
-            {             
+            do
+            {
                 end.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
                 end.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
-            }
+            } while ((Math.Abs(end.X - beg.X) + Math.Abs(end.Y - beg.Y)) < ((map.Width + map.Height) / 4) || map.BlockCells[end.X, end.Y] != Block.Empty);
             map.BlockCells[end.X, end.Y] = Block.Target ;
         }
 
@@ -137,14 +134,6 @@ namespace MapGen
                     }
                 }
             }
-        }
-        private bool pointUseful(Point p)
-        {
-            if(map.BlockCells[p.X, p.Y]==Block.Empty && 
-               map.BlockCells[p.X, p.Y]!=Block.Wall && 
-               map.BlockCells[p.X, p.Y]!=Block.Border)
-                return true;
-            return false;
         }
     }
 
