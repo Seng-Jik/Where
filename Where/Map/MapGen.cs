@@ -69,7 +69,7 @@ namespace MapGen
             do
             {
                 beg.X = rnd.Next((map.Width - 1) / 2) * 2 + 1;
-                beg.Y = rnd2.Next((map.Height - 1) / 2) * 2 + 1;
+                beg.Y = rnd.Next((map.Height - 1) / 2) * 2 + 1;
             }while(map.BlockCells[beg.X,beg.Y]!=Block.Empty);
             map.BlockCells[beg.X, beg.Y] = Block.Begin;
             do
