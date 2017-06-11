@@ -40,8 +40,8 @@ namespace Where.Game
             }
 
             Vector2 delta = new Vector2(
-                (float)Math.Sin(angle * 3.1415926f / 180.0f),
-                (float)Math.Cos(angle * 3.1415926f / 180.0f)
+                (float)Math.Sin((angle+Where.Input.Runner.AngleFix) * 3.1415926f / 180.0f),
+                (float)Math.Cos((angle + Where.Input.Runner.AngleFix) * 3.1415926f / 180.0f)
             );
 
             delta *= -1.0f * speed;
@@ -53,5 +53,6 @@ namespace Where.Game
         public Vector2 LastPosition { get; private set; }
         float angle,speed,pov;
         readonly Renderer.IRenderer renderer;
+ 
     }
 }

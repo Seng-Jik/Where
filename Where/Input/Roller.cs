@@ -18,6 +18,10 @@ namespace Where.Input
             {
                 mouseXDelta = arg.XDelta;
                 mouseYDelta = arg.YDelta;
+                if (arg.XDelta > 0)
+                {
+
+                }
             };
         }
 
