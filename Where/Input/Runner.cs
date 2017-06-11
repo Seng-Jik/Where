@@ -88,7 +88,7 @@ namespace Where.Input
             get
             {
                 var ret = state;
-                state = StateType.Stop;                
+                //state = StateType.Stop;                
                 return ret;
             }
         }
