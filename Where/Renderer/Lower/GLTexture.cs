@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK.Graphics.ES20;
+﻿using OpenTK.Graphics.ES20;
+using System;
 
 namespace Where.Renderer.Lower
 {
-    class GLTexture:IDisposable
+    internal class GLTexture : IDisposable
     {
         public GLTexture()
         {
@@ -22,7 +18,7 @@ namespace Where.Renderer.Lower
 
         public void BindTo0AndLoadImage(string name)
         {
-            var sst = new SSTReader(new System.IO.BinaryReader(System.IO.File.OpenRead("../../../Assets/Textures/"+name+".sst")));
+            var sst = new SSTReader(new System.IO.BinaryReader(System.IO.File.OpenRead("../../../Assets/Textures/" + name + ".sst")));
             Bind(0);
 
             var texSize = sst.Size;
@@ -33,9 +29,10 @@ namespace Where.Renderer.Lower
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Repeat);
         }
 
-        readonly int textureID;
+        private readonly int textureID;
 
         #region IDisposable Support
+
         private bool disposedValue = false; // 要检测冗余调用
 
         protected virtual void Dispose(bool disposing)
@@ -52,15 +49,17 @@ namespace Where.Renderer.Lower
             }
         }
 
-         ~GLTexture() {
+        ~GLTexture()
+        {
             Dispose(false);
-         }
+        }
 
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion IDisposable Support
     }
 }

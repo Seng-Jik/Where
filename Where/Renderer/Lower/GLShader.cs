@@ -1,17 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OpenTK;
 using OpenTK.Graphics.ES20;
-using OpenTK;
+using System;
+using System.IO;
 
 namespace Where.Renderer.Lower
 {
-    public class GLShader:IDisposable
+    public class GLShader : IDisposable
     {
-        public GLShader(string vert,string frag)
+        public GLShader(string vert, string frag)
         {
             var vShader = GL.CreateShader(ShaderType.VertexShader);
             var fShader = GL.CreateShader(ShaderType.FragmentShader);
@@ -38,12 +34,12 @@ namespace Where.Renderer.Lower
 
         public int GetUniformLocation(string uniform)
         {
-            return GL.GetUniformLocation(programHandle,uniform);
+            return GL.GetUniformLocation(programHandle, uniform);
         }
 
         public int GetAttributionLocation(string attrib)
         {
-            return GL.GetAttribLocation(programHandle,attrib);
+            return GL.GetAttribLocation(programHandle, attrib);
         }
 
         public void SetUniform(int loc, ref Matrix4 mat4)
@@ -66,7 +62,7 @@ namespace Where.Renderer.Lower
             GL.Uniform3(loc, v);
         }
 
-        public void SetUniform(string name,int i)
+        public void SetUniform(string name, int i)
         {
             GL.Uniform1(GetUniformLocation(name), i);
         }
@@ -76,9 +72,10 @@ namespace Where.Renderer.Lower
             GL.EnableVertexAttribArray(loc);
         }
 
-        int programHandle;
+        private int programHandle;
 
         #region IDisposable Support
+
         private bool disposedValue = false; // 要检测冗余调用
 
         protected virtual void Dispose(bool disposing)
@@ -95,18 +92,20 @@ namespace Where.Renderer.Lower
             }
         }
 
-         ~GLShader() {
-           // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
-           Dispose(false);
-         }
+        ~GLShader()
+        {
+            // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
+            Dispose(false);
+        }
 
         // 添加此代码以正确实现可处置模式。
         public void Dispose()
         {
             // 请勿更改此代码。将清理代码放入以上 Dispose(bool disposing) 中。
             Dispose(true);
-             GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
-        #endregion
+
+        #endregion IDisposable Support
     }
 }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MapGen;
+﻿using MapGen;
 using OpenTK;
 using OpenTK.Graphics.ES20;
+using System.Collections.Generic;
 
 namespace Where.Renderer.Renderer2D
 {
@@ -23,13 +21,11 @@ namespace Where.Renderer.Renderer2D
             playerShader.EnableAttribute(wallShaderLocs.attrVertex);
             playerShaderLocs.unifCamera = wallShader.GetUniformLocation("Camera");
 
-
             player = new Lower.GLBuffer(BufferTarget.ArrayBuffer);
         }
 
         public void OnDraw()
         {
-            
             wallShader.Use();
             wallScene.VertexBuffer.Bind();
             wallScene.IndexBuffer.Bind();
@@ -50,9 +46,8 @@ namespace Where.Renderer.Renderer2D
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedShort, playerTriangle);
         }
 
-        public void SetCamera(float angle,float pov, Vector2 pos)
+        public void SetCamera(float angle, float pov, Vector2 pos)
         {
-            
             var camera = Matrix4.Identity;
 
             camera *= Matrix4.CreateTranslation(-new Vector3(pos));
@@ -61,7 +56,6 @@ namespace Where.Renderer.Renderer2D
 
             camera *= Matrix4.CreateOrthographicOffCenter(32, -32, 32, -32, -200, 200);
             camera *= Matrix4.CreateScale(8.0f);
-
 
             player.Bind();
             Vector2[] playerBuf =
@@ -82,10 +76,10 @@ namespace Where.Renderer.Renderer2D
             wallShader.SetUniform(wallShaderLocs.unifCamera, ref camera);
         }
 
-        public void SetWallBuffer(List<Point> wallPoints,Point targetPoint)
+        public void SetWallBuffer(List<Point> wallPoints, Point targetPoint)
         {
             wallShader.Use();
-            
+
             wallScene = WallGen.CreateWallBuffer(wallPoints);
 
             target = new Lower.GLBuffer(BufferTarget.ArrayBuffer);
@@ -101,18 +95,21 @@ namespace Where.Renderer.Renderer2D
             target.BufferData(4 * 2 * sizeof(float), playerBuf, BufferUsageHint.StaticDraw);
         }
 
-        SceneBuffer wallScene;
+        private SceneBuffer wallScene;
 
-        Lower.GLShader wallShader;
-        struct Shader2DLocs {
+        private Lower.GLShader wallShader;
+
+        private struct Shader2DLocs
+        {
             public int attrVertex;
             public int unifCamera;
         }
-        Shader2DLocs wallShaderLocs,playerShaderLocs;
 
-        Lower.GLBuffer player;
-        Lower.GLShader playerShader;
+        private Shader2DLocs wallShaderLocs, playerShaderLocs;
 
-        Lower.GLBuffer target;
+        private Lower.GLBuffer player;
+        private Lower.GLShader playerShader;
+
+        private Lower.GLBuffer target;
     }
 }

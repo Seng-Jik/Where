@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Where.Renderer.Lower;
+﻿using Where.Renderer.Lower;
 
 namespace Where.Renderer.Renderer2D
 {

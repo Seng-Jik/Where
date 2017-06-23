@@ -2,11 +2,11 @@
 
 namespace Where.Renderer.Lower
 {
-    sealed class SSTReader
+    internal sealed class SSTReader
     {
         public enum SSTCompressMode
         {
-            RGBA,DXT1,DXT3,DXT5
+            RGBA, DXT1, DXT3, DXT5
         }
 
         public SSTReader(System.IO.BinaryReader sst)
@@ -18,15 +18,19 @@ namespace Where.Renderer.Lower
                 case 0:
                     cmode = SSTCompressMode.RGBA;
                     break;
+
                 case 10:
                     cmode = SSTCompressMode.DXT1;
                     break;
+
                 case 11:
                     cmode = SSTCompressMode.DXT3;
                     break;
+
                 case 12:
                     cmode = SSTCompressMode.DXT5;
                     break;
+
                 default:
                     throw new Exception("Bad sst texture.");
             }
@@ -38,7 +42,7 @@ namespace Where.Renderer.Lower
 
             rects = new OpenTK.Box2[rectSize];
 
-            for (UInt16 i = 0;i < rectSize; ++i)
+            for (UInt16 i = 0; i < rectSize; ++i)
             {
                 UInt16 x = sst.ReadUInt16();
                 UInt16 y = sst.ReadUInt16();
@@ -46,9 +50,9 @@ namespace Where.Renderer.Lower
                 UInt16 h = sst.ReadUInt16();
 
                 rects[i].Left = x / width;
-                rects[i].Right = (x + w)/width;
-                rects[i].Top = y/height;
-                rects[i].Bottom = (y + h)/height;
+                rects[i].Right = (x + w) / width;
+                rects[i].Top = y / height;
+                rects[i].Bottom = (y + h) / height;
             }
 
             var dataSize = sst.ReadInt32();
@@ -77,7 +81,7 @@ namespace Where.Renderer.Lower
 
         private byte[] data;
         private float width, height;
-        OpenTK.Box2[] rects;
-        SSTCompressMode cmode;
+        private OpenTK.Box2[] rects;
+        private SSTCompressMode cmode;
     }
 }

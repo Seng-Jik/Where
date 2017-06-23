@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MapGen;
+﻿using MapGen;
 using OpenTK;
+using System;
+
 namespace Where.Game
 {
     public class Wall : GameObjectWithCollitor
     {
         public Wall(Point pos) : base(pos)
         {
-
         }
 
         protected override void OnColliWithPlayer()
@@ -43,10 +41,11 @@ namespace Where.Game
                 }
                 player.Position = new Vector2(lastpos.X + vec.X / 2.5f, lastpos.Y + vec.Y / 2.5f);
             }
-            catch {
+            catch
+            {
                 var player = ((GameContext)(GameContext.CurrentGame.Target)).Player;
-                player.Position = lastpos; }
-          
+                player.Position = lastpos;
+            }
         }
     }
 }

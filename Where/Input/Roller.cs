@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Where.Input
+﻿namespace Where.Input
 {
     public static class Roller
     {
@@ -13,14 +7,12 @@ namespace Where.Input
             Engine.Engine.Window.Mouse.ButtonDown += (obj, arg) => leftButton = true;
             Engine.Engine.Window.Mouse.ButtonUp += (obj, arg) => leftButton = false;
 
-
             Engine.Engine.Window.Mouse.Move += (obj, arg) =>
             {
                 mouseXDelta = arg.XDelta;
                 mouseYDelta = arg.YDelta;
                 if (arg.XDelta > 0)
                 {
-
                 }
             };
         }
@@ -29,7 +21,7 @@ namespace Where.Input
         {
             get
             {
-                var ret = leftButton? mouseXDelta : 0;
+                var ret = leftButton ? mouseXDelta : 0;
                 mouseXDelta = 0;
                 return -ret;
             }
@@ -45,7 +37,7 @@ namespace Where.Input
             }
         }
 
-        static float mouseXDelta, mouseYDelta;
-        static bool leftButton = false;
+        private static float mouseXDelta, mouseYDelta;
+        private static bool leftButton = false;
     }
 }

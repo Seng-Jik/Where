@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Where.Renderer.Lower;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.ES20;
+using Where.Renderer.Lower;
 
 namespace Where.Renderer.Renderer3D
 {
-    class Earth
+    internal class Earth
     {
         public Earth()
         {
@@ -38,14 +33,14 @@ namespace Where.Renderer.Renderer3D
                 new Vector2(0,100),
                 new Vector2(0,0),
                 new Vector2(100,0),
-
             };
             earthBuffer.Bind();
             earthBuffer.BufferData(3 * 6 * sizeof(float), earth, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);
             texCoordBuffer.Bind();
             texCoordBuffer.BufferData(2 * 6 * sizeof(float), texCoord, OpenTK.Graphics.ES20.BufferUsageHint.StaticDraw);
         }
-        public void OnDraw(GLShader shader,Renderer3D.ObjectDrawShaderLocs locs)
+
+        public void OnDraw(GLShader shader, Renderer3D.ObjectDrawShaderLocs locs)
         {
             shader.SetUniform(locs.Normal, new Vector3(0, 1, 0));
             Matrix3 tbn = Renderer3D.GetTBNMatrix(new Vector3(0, 1, 0), new Vector3(1, 0, 1));
@@ -57,7 +52,7 @@ namespace Where.Renderer.Renderer3D
             GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
         }
 
-        GLBuffer earthBuffer = new GLBuffer(BufferTarget.ArrayBuffer);
-        GLBuffer texCoordBuffer = new GLBuffer(BufferTarget.ArrayBuffer);
+        private GLBuffer earthBuffer = new GLBuffer(BufferTarget.ArrayBuffer);
+        private GLBuffer texCoordBuffer = new GLBuffer(BufferTarget.ArrayBuffer);
     }
 }

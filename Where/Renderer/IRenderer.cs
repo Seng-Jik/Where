@@ -1,7 +1,5 @@
-﻿using System;
+﻿using OpenTK;
 using System.Collections.Generic;
-using System.Text;
-using OpenTK;
 
 namespace Where.Renderer
 {
@@ -9,7 +7,8 @@ namespace Where.Renderer
     {
         void OnDraw();
 
-        void SetWallBuffer(List<MapGen.Point> wallPoints,MapGen.Point targetPoint);
-        void SetCamera(float angle,float pov, Vector2 pos);
+        void SetWallBuffer(List<MapGen.Point> wallPoints, MapGen.Point targetPoint);
+
+        void SetCamera(float angle, float pov, Vector2 pos);
     }
 }

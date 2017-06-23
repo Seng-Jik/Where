@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.ES20;
+using System.Collections.Generic;
 
 namespace Where.Renderer.Renderer2D
 {
@@ -17,7 +13,7 @@ namespace Where.Renderer.Renderer2D
             List<OpenTK.Vector2> vertexBuffer = new List<Vector2>();
             List<short> index = new List<short>();
             short nowIndex = 0;
-            foreach(var wall in wallPoints)
+            foreach (var wall in wallPoints)
             {
                 vertexBuffer.Add(new Vector2(wall.X - 0.5f, wall.Y - 0.5f));
                 vertexBuffer.Add(new Vector2(wall.X + 0.5f, wall.Y - 0.5f));

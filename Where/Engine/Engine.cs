@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.ES20;
+using System.Collections.Generic;
+
 namespace Where.Engine
 {
     public class Engine
@@ -10,12 +10,13 @@ namespace Where.Engine
         public static GameObjectList Root { get; private set; }
 
         public delegate void Task();
+
         public static void TaskToMainThread(Task task)
         {
             lock (tasks) tasks.Enqueue(task);
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Window = new GameWindow(1024, 768, new OpenTK.Graphics.GraphicsMode(32, 16, 0, 4), "Where", GameWindowFlags.Default);
 
@@ -26,14 +27,13 @@ namespace Where.Engine
             GL.CullFace(CullFaceMode.Back);
             GL.Enable(EnableCap.CullFace);
 
-
             Input.Roller.Init();
             Input.Runner.Init();
 
             Root = new GameObjectList();
-            
+
             Window.UpdateFrame += (obj, arg) => { Root.OnUpdate(); };
-            Root.Objects.Add(new Game.GameContext(17,17));
+            Root.Objects.Add(new Game.GameContext(17, 17));
             Window.RenderFrame += (obj, arg) => { Window.SwapBuffers(); };
 
             Window.UpdateFrame += (obj, arg) =>
@@ -42,12 +42,10 @@ namespace Where.Engine
                     while (tasks.Count > 0)
                         tasks.Dequeue()();
             };
-            
-            Window.Run(60, 60);
 
-            
+            Window.Run(60, 60);
         }
 
-        static Queue<Task> tasks = new Queue<Task>();
+        private static Queue<Task> tasks = new Queue<Task>();
     }
 }

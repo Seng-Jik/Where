@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
+using System;
 
 namespace Where.Renderer.Renderer3D
 {
-    class DayNight
+    internal class DayNight
     {
         public double Clock { get; private set; } = 3.0;
         public Vector3 SkyColorA { get; private set; }
@@ -15,8 +11,6 @@ namespace Where.Renderer.Renderer3D
         public float CloudDensity { get; private set; }
         public float PlayerLight { get; private set; }
         public Vector3 SunLightPos { get; private set; }
-        
-
 
         public struct TimeDescribe
         {
@@ -28,6 +22,7 @@ namespace Where.Renderer.Renderer3D
                 AfterNoon = 3,
                 Evening = 4
             }
+
             public DescribeEnum Describe;
             public double Delta;
         }
@@ -58,35 +53,35 @@ namespace Where.Renderer.Renderer3D
 
                 //插值行为
                 double deltaBegin = 0, deltaEnd = 0;
-                if(Clock >= 4 && Clock <= 7)
+                if (Clock >= 4 && Clock <= 7)
                 {
                     deltaBegin = 4;
                     deltaEnd = 7;
                     t.Describe = TimeDescribe.DescribeEnum.Night;
                 }
 
-                if(Clock >= 9 && Clock <= 11)
+                if (Clock >= 9 && Clock <= 11)
                 {
                     deltaBegin = 9;
                     deltaEnd = 11;
                     t.Describe = TimeDescribe.DescribeEnum.Morning;
                 }
 
-                if(Clock >= 14 && Clock <= 15)
+                if (Clock >= 14 && Clock <= 15)
                 {
                     deltaBegin = 14;
                     deltaEnd = 15;
                     t.Describe = TimeDescribe.DescribeEnum.Noon;
                 }
 
-                if(Clock >= 16 && Clock <= 18)
+                if (Clock >= 16 && Clock <= 18)
                 {
                     deltaBegin = 16;
                     deltaEnd = 18;
                     t.Describe = TimeDescribe.DescribeEnum.AfterNoon;
                 }
 
-                if(Clock >= 19 && Clock <= 20)
+                if (Clock >= 19 && Clock <= 20)
                 {
                     deltaBegin = 19;
                     deltaEnd = 20;
@@ -113,27 +108,25 @@ namespace Where.Renderer.Renderer3D
             CloudDensity = UpdateFloatValue(cloudDensitys);
             PlayerLight = UpdateFloatValue(playerLights);
             UpdateSunLightPos();
-
-
         }
 
-        void UpdateSunLightPos()
+        private void UpdateSunLightPos()
         {
             double sunDelta = Clock / 24 * 360;
             sunDelta += 90;
             sunDelta = sunDelta * Math.PI / 180;
 
-            SunLightPos = new Vector3(3000 * (float)Math.Cos(sunDelta), 3000*(float)Math.Sin(sunDelta), -30 * (float)Math.Sin(sunDelta));
+            SunLightPos = new Vector3(3000 * (float)Math.Cos(sunDelta), 3000 * (float)Math.Sin(sunDelta), -30 * (float)Math.Sin(sunDelta));
         }
 
-        T CalcValueByDescribe<T>(T[] vset, TimeDescribe td, Func<T, T, float, T> mixer)
+        private T CalcValueByDescribe<T>(T[] vset, TimeDescribe td, Func<T, T, float, T> mixer)
         {
             var begin = vset[(int)td.Describe];
             var end = vset[(int)td.Describe + 1];
             return mixer(begin, end, (float)td.Delta);
         }
 
-        readonly Vector3[] skyColorsA = //亮色
+        private readonly Vector3[] skyColorsA = //亮色
         {
             new Vector3(0.05f,0.05f,0.25f),  //夜:[20~24]U[0~4]
             new Vector3(0.2f, 0.4f, 0.6f),                                              //上午:[7~9]
@@ -143,7 +136,7 @@ namespace Where.Renderer.Renderer3D
             new Vector3(0.05f,0.05f,0.25f)                                               //夜:[20~24]U[0~4]
         };
 
-        readonly Vector3[] skyColorsB =    //暗色
+        private readonly Vector3[] skyColorsB =    //暗色
         {
             new Vector3(0.00784313725490196f,0.0784313725490196f,0.266666666666667f),  //夜:[20~24]U[0~4]
             new Vector3(0.2f, 0.4f, 0.6f),                                              //上午:[7~9]
@@ -153,7 +146,7 @@ namespace Where.Renderer.Renderer3D
             new Vector3(0.00784313725490196f,0.0784313725490196f,0.266666666666667f)  //夜:[20~24]U[0~4]
         };
 
-        void UpdateSkyColor()
+        private void UpdateSkyColor()
         {
             var des = Describe;
 
@@ -161,9 +154,9 @@ namespace Where.Renderer.Renderer3D
             SkyColorB = CalcValueByDescribe(skyColorsB, des, (a, b, d) => (b - a) * d + a);
         }
 
-        readonly float[] cloudDensitys = { 0.1f, 0.7f, 1.0f, 0.7f, 0.8f, 0.1f };
-        readonly float[] playerLights = { 1.2f, 0.25f, 0.0f ,0.0f, 0.0f, 1.2f };
-        float UpdateFloatValue(float[] vset) => CalcValueByDescribe(vset, Describe, (a, b, d) => (b - a) * d + a);
+        private readonly float[] cloudDensitys = { 0.1f, 0.7f, 1.0f, 0.7f, 0.8f, 0.1f };
+        private readonly float[] playerLights = { 1.2f, 0.25f, 0.0f, 0.0f, 0.0f, 1.2f };
 
+        private float UpdateFloatValue(float[] vset) => CalcValueByDescribe(vset, Describe, (a, b, d) => (b - a) * d + a);
     }
 }

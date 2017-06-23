@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapGen;
-using OpenTK;
+﻿using MapGen;
 using System.Windows.Forms;
 
 namespace Where.Game
 {
-    class Target : GameObjectWithCollitor
+    internal class Target : GameObjectWithCollitor
     {
         public Target(Point pos) : base(pos)
         {

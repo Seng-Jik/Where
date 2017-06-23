@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapGen;
+﻿using MapGen;
 using OpenTK;
 using OpenTK.Graphics.ES20;
+using System.Collections.Generic;
 using Where.Renderer.Lower;
 
 namespace Where.Renderer.Renderer3D
 {
-    class Wall
+    internal class Wall
     {
-        private void AddBox(List<Vector3> verticles,List<Vector2> texCoords,List<ushort> indiclesF, List<ushort> indiclesB, List<ushort> indiclesL, List<ushort> indiclesR, Point pos)
+        private void AddBox(List<Vector3> verticles, List<Vector2> texCoords, List<ushort> indiclesF, List<ushort> indiclesB, List<ushort> indiclesL, List<ushort> indiclesR, Point pos)
         {
             ushort begin = (ushort)(verticles.Count);
 
@@ -20,10 +16,10 @@ namespace Where.Renderer.Renderer3D
             const float BOX_HEIGHT_MUL = 8.0f;
 
             //底部顶点
-            verticles.Add(new Vector3(2*BOX_SIZE*pos.X - BOX_SIZE, 0, -2*BOX_SIZE*pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
-            verticles.Add(new Vector3(2*BOX_SIZE*pos.X + BOX_SIZE, 0, -2*BOX_SIZE*pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(1, 0));
-            verticles.Add(new Vector3(2*BOX_SIZE*pos.X + BOX_SIZE, 0, -2*BOX_SIZE* pos.Y+ BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
-            verticles.Add(new Vector3(2*BOX_SIZE*pos.X - BOX_SIZE, 0, -2*BOX_SIZE* pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(1, 0));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, 0, -2 * BOX_SIZE * pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X + BOX_SIZE, 0, -2 * BOX_SIZE * pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(1, 0));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X + BOX_SIZE, 0, -2 * BOX_SIZE * pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(0, 0));
+            verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, 0, -2 * BOX_SIZE * pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(1, 0));
 
             //顶部顶点
             verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y - BOX_SIZE)); texCoords.Add(new Vector2(0, 1));
@@ -32,7 +28,6 @@ namespace Where.Renderer.Renderer3D
             verticles.Add(new Vector3(2 * BOX_SIZE * pos.X - BOX_SIZE, BOX_HEIGHT_MUL * BOX_SIZE, -2 * BOX_SIZE * pos.Y + BOX_SIZE)); texCoords.Add(new Vector2(1, 1));
 
             //顶点索引
-
 
             //底面
 
@@ -71,9 +66,8 @@ namespace Where.Renderer.Renderer3D
             indiclesB.Add((ushort)(begin + 2));
             indiclesB.Add((ushort)(begin + 5));
             indiclesB.Add((ushort)(begin + 6));
-
-
         }
+
         public Wall(List<Point> wallPoints)
         {
             verticles = new GLBuffer(BufferTarget.ArrayBuffer);
@@ -93,7 +87,7 @@ namespace Where.Renderer.Renderer3D
             int s = 0;
             foreach (var i in wallPoints)
             {
-                AddBox(vecs, texs, indsF,indsB,indsL,indsR,i);
+                AddBox(vecs, texs, indsF, indsB, indsL, indsR, i);
                 s++;
                 //if (s >= 1) break;
             }
@@ -108,7 +102,7 @@ namespace Where.Renderer.Renderer3D
             vecSize = vecs.Count * 3 / 4;
         }
 
-        public void OnDraw(GLShader shader,Renderer3D.ObjectDrawShaderLocs locs)
+        public void OnDraw(GLShader shader, Renderer3D.ObjectDrawShaderLocs locs)
         {
             verticles.Bind();
             GL.VertexAttribPointer(locs.Vertex, 3, VertexAttribPointerType.Float, false, 0, 0);
@@ -139,11 +133,10 @@ namespace Where.Renderer.Renderer3D
             shader.SetUniform(locs.TBNMatrix, ref tbn);
             indicesRight.Bind();
             GL.DrawElements(BeginMode.Triangles, vecSize, DrawElementsType.UnsignedShort, 0);
-
         }
 
-        readonly GLBuffer verticles, texCoords;
-        readonly GLBuffer indicesFront, indicesBack, indicesLeft, indicesRight;
-        int vecSize;
+        private readonly GLBuffer verticles, texCoords;
+        private readonly GLBuffer indicesFront, indicesBack, indicesLeft, indicesRight;
+        private int vecSize;
     }
 }

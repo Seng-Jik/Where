@@ -1,5 +1,4 @@
-﻿using System;
-using OpenTK;
+﻿using OpenTK;
 
 namespace Where.Game
 {
@@ -34,7 +33,7 @@ namespace Where.Game
 
         protected abstract void OnColliWithPlayer();
 
-        readonly Box2 collitor;
+        private readonly Box2 collitor;
 
         protected Box2 Collitor { get => collitor; }
     }

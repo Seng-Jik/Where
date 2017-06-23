@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using Where.Renderer.Lower;
+﻿using OpenTK;
 using OpenTK.Graphics.ES20;
+using Where.Renderer.Lower;
 
 namespace Where.Renderer.Renderer3D
 {
-    class SkyBox
+    internal class SkyBox
     {
         public SkyBox()
         {
@@ -85,11 +80,11 @@ namespace Where.Renderer.Renderer3D
             texCoord.Bind();
             GL.VertexAttribPointer(topLocs.TexCoord, 2, VertexAttribPointerType.Float, false, 0, 0);
             indices.Bind();
-            GL.DrawElements(BeginMode.Triangles, 6 * 5,DrawElementsType.UnsignedShort, 0);
+            GL.DrawElements(BeginMode.Triangles, 6 * 5, DrawElementsType.UnsignedShort, 0);
             GL.UseProgram(0);
         }
 
-        public void SetPos(Vector2 pos,Renderer3D rnd)
+        public void SetPos(Vector2 pos, Renderer3D rnd)
         {
             time++;
             var eyePos = new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y);
@@ -102,14 +97,14 @@ namespace Where.Renderer.Renderer3D
             GL.UseProgram(0);
         }
 
-        GLBuffer verticles = new GLBuffer(OpenTK.Graphics.ES20.BufferTarget.ArrayBuffer);
-        GLBuffer indices = new GLBuffer(OpenTK.Graphics.ES20.BufferTarget.ElementArrayBuffer);
-        GLBuffer texCoord = new GLBuffer(OpenTK.Graphics.ES20.BufferTarget.ArrayBuffer);
+        private GLBuffer verticles = new GLBuffer(OpenTK.Graphics.ES20.BufferTarget.ArrayBuffer);
+        private GLBuffer indices = new GLBuffer(OpenTK.Graphics.ES20.BufferTarget.ElementArrayBuffer);
+        private GLBuffer texCoord = new GLBuffer(OpenTK.Graphics.ES20.BufferTarget.ArrayBuffer);
 
-        GLShader skyTopShader;
-        float time;
+        private GLShader skyTopShader;
+        private float time;
 
-        struct SkyTopShaderLocs
+        private struct SkyTopShaderLocs
         {
             public int
                 Camera,
@@ -122,6 +117,6 @@ namespace Where.Renderer.Renderer3D
                 Time;
         }
 
-        SkyTopShaderLocs topLocs;
+        private SkyTopShaderLocs topLocs;
     }
 }

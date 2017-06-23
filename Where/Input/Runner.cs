@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Where.Input
+﻿namespace Where.Input
 {
     public static class Runner
     {
-
         public static void Init()
         {
             Engine.Engine.Window.Mouse.WheelChanged += (obj, arg) =>
@@ -25,20 +18,22 @@ namespace Where.Input
             Engine.Engine.Window.Keyboard.KeyUp += KeyUpEvent;
         }
 
-
-
         private static void KeyUpEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
-            switch (e.Key) {
+            switch (e.Key)
+            {
                 case OpenTK.Input.Key.W:
                     up = false;
                     break;
+
                 case OpenTK.Input.Key.S:
                     down = false;
                     break;
+
                 case OpenTK.Input.Key.A:
                     left = false;
                     break;
+
                 case OpenTK.Input.Key.D:
                     right = false;
                     break;
@@ -46,6 +41,7 @@ namespace Where.Input
             state = (left || right || up || down) ? StateType.Go : StateType.Stop;
             SetAngleFix();
         }
+
         private static void KeyDownEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
             switch (e.Key)
@@ -53,19 +49,23 @@ namespace Where.Input
                 case OpenTK.Input.Key.W:
                     up = true;
                     break;
+
                 case OpenTK.Input.Key.S:
                     down = true;
                     break;
+
                 case OpenTK.Input.Key.A:
-                    left  = true;
+                    left = true;
                     break;
+
                 case OpenTK.Input.Key.D:
-                    right  = true;
+                    right = true;
                     break;
             }
             state = (left || right || up || down) ? StateType.Go : StateType.Stop;
             SetAngleFix();
         }
+
         private static void SetAngleFix()
         {
             int i = 1, j = 1;
@@ -75,6 +75,7 @@ namespace Where.Input
             if (right) i--;
             AngleFix = angleFixes[i, j];
         }
+
         public enum StateType
         {
             Stop,
@@ -82,13 +83,14 @@ namespace Where.Input
             Back
         }
 
-        static StateType state;
+        private static StateType state;
+
         public static StateType State
         {
             get
             {
                 var ret = state;
-                //state = StateType.Stop;                
+                //state = StateType.Stop;
                 return ret;
             }
         }

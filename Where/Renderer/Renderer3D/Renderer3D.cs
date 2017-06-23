@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapGen;
+﻿using MapGen;
 using OpenTK;
 using OpenTK.Graphics.ES20;
+using System;
+using System.Collections.Generic;
 using Where.Renderer.Lower;
 
 namespace Where.Renderer.Renderer3D
@@ -36,7 +33,6 @@ namespace Where.Renderer.Renderer3D
             objectDraw.SetUniform("NormalMap", 2);
             objectDraw.SetUniform("Cloud", 3);
 
-
             GL.UseProgram(0);
 
             cloudNoise.BindTo0AndLoadImage("Cloud");
@@ -44,25 +40,22 @@ namespace Where.Renderer.Renderer3D
             wallMateria = new Materia("wall");
             earthMateria = new Materia("grass");
         }
+
         public void OnDraw()
         {
             time += 1;
             GL.Viewport(0, 0, Engine.Engine.Window.Width, Engine.Engine.Window.Height);
 
-
             GL.Enable(EnableCap.DepthTest);
-
 
             cloudNoise.Bind(3);
             sky.OnDraw(dayNight);
 
             objectDraw.Use();
-            objectDraw.SetUniform(objectDrawLocs.Time,time);
-
-            
+            objectDraw.SetUniform(objectDrawLocs.Time, time);
 
             earthMateria.Bind();
-            earth.OnDraw(objectDraw,objectDrawLocs);
+            earth.OnDraw(objectDraw, objectDrawLocs);
 
             //此处绘制墙体
             wallMateria.Bind();
@@ -74,19 +67,17 @@ namespace Where.Renderer.Renderer3D
             renderer2d.OnDraw();
         }
 
-        public void SetCamera(float angle,float pov, Vector2 pos)
+        public void SetCamera(float angle, float pov, Vector2 pos)
         {
             dayNight.Update();
-            renderer2d.SetCamera(angle,pov, pos);
+            renderer2d.SetCamera(angle, pov, pos);
 
             var eyePos = new Vector3(-21.0F * pos.X, -20.0F, 21.0F * pos.Y);
             Camera = Matrix4.CreateTranslation(eyePos) * Matrix4.CreateRotationY((float)((angle + 180) * Math.PI / 180));
 
             Matrix4 camera = Camera * Projection;
 
-            sky.SetPos(pos,this);
-
-           
+            sky.SetPos(pos, this);
 
             objectDraw.Use();
             objectDraw.SetUniform(objectDrawLocs.Camera, ref camera);
@@ -105,7 +96,7 @@ namespace Where.Renderer.Renderer3D
             wall = new Wall(wallPoints);
         }
 
-        public static Matrix3 GetTBNMatrix(Vector3 N,Vector3 T)
+        public static Matrix3 GetTBNMatrix(Vector3 N, Vector3 T)
         {
             Vector3 B = OpenTK.Vector3.Cross(N, T);
             return new Matrix3(T, B, N);
@@ -114,9 +105,11 @@ namespace Where.Renderer.Renderer3D
         public Matrix4 Projection { get; private set; }
         public Matrix4 Camera { get; private set; }
 
-        Renderer2D.Renderer2D renderer2d = new Renderer2D.Renderer2D();
-        Earth earth = new Earth();
-        GLShader objectDraw = new GLShader("VertexShader", "3D_ObjectDraw");
+        public AfterEffect.AfterEffectSystem AfterEffects { get; private set; } = new AfterEffect();
+
+        private Renderer2D.Renderer2D renderer2d = new Renderer2D.Renderer2D();
+        private Earth earth = new Earth();
+        private GLShader objectDraw = new GLShader("VertexShader", "3D_ObjectDraw");
 
         public struct ObjectDrawShaderLocs
         {
@@ -133,17 +126,17 @@ namespace Where.Renderer.Renderer3D
                 SunLightPos,
                 Time;
         }
-        ObjectDrawShaderLocs objectDrawLocs;
 
-        Wall wall;
-        float time = 0;
+        private ObjectDrawShaderLocs objectDrawLocs;
 
-        GLTexture cloudNoise = new GLTexture();
-        readonly Materia wallMateria, earthMateria;
+        private Wall wall;
+        private float time = 0;
 
-        SkyBox sky = new SkyBox();
+        private GLTexture cloudNoise = new GLTexture();
+        private readonly Materia wallMateria, earthMateria;
 
-        DayNight dayNight = new DayNight();
+        private SkyBox sky = new SkyBox();
 
+        private DayNight dayNight = new DayNight();
     }
 }
