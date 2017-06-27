@@ -94,8 +94,11 @@
             get
             {
                 var ret = mouseWheelstate;
-                //state = StateType.Stop;
                 return ret;
+            }
+            set
+            {
+                mouseWheelstate = StateType.Stop;
             }
         }
 
