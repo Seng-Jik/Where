@@ -7,11 +7,17 @@
             Engine.Engine.Window.Mouse.WheelChanged += (obj, arg) =>
              {
                  if (arg.Delta > 0)
-                     state = StateType.Go;
+                 {
+                     mouseWheelstate = StateType.Go;
+                     MouseWheeled = true;
+                 }
                  else if (arg.Delta < 0)
-                     state = StateType.Back;
+                 {
+                     mouseWheelstate = StateType.Back;
+                     MouseWheeled = true;
+                 }
                  else
-                     state = StateType.Stop;
+                     mouseWheelstate = StateType.Stop;
                  //Console.WriteLine(state);
              };
             Engine.Engine.Window.Keyboard.KeyDown += KeyDownEvent;
@@ -38,7 +44,6 @@
                     right = false;
                     break;
             }
-            state = (left || right || up || down) ? StateType.Go : StateType.Stop;
             SetAngleFix();
         }
 
@@ -62,7 +67,6 @@
                     right = true;
                     break;
             }
-            state = (left || right || up || down) ? StateType.Go : StateType.Stop;
             SetAngleFix();
         }
 
@@ -83,13 +87,13 @@
             Back
         }
 
-        private static StateType state;
+        private static StateType mouseWheelstate;
 
         public static StateType State
         {
             get
             {
-                var ret = state;
+                var ret = mouseWheelstate;
                 //state = StateType.Stop;
                 return ret;
             }
@@ -97,6 +101,8 @@
 
         private static bool left = false, right = false, up = false, down = false;
         public static int AngleFix = 0;
+        public static bool MouseWheeled { get; set; } = false;
+        public static bool IsKeyDown{ get { return (left || right || up || down); } }
         private static int[,] angleFixes = { { 45, 90, 135 }, { 0, 0, 180 }, { -45, -90, -135 } };
     }
 }
