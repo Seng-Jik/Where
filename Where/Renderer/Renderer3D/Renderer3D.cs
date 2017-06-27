@@ -105,7 +105,7 @@ namespace Where.Renderer.Renderer3D
         public Matrix4 Projection { get; private set; }
         public Matrix4 Camera { get; private set; }
 
-        public AfterEffect.AfterEffectSystem AfterEffects { get; private set; } = new AfterEffect();
+        public AfterEffect.AfterEffectSystem AfterEffects { get; private set; } = new AfterEffect.AfterEffectSystem();
 
         private Renderer2D.Renderer2D renderer2d = new Renderer2D.Renderer2D();
         private Earth earth = new Earth();
