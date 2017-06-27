@@ -40,9 +40,9 @@ namespace Where.Game
                         keyMovespeed = 0.0f;
                 }
                 Vector2 delta = new Vector2(
-                (float)Math.Sin((angle + Where.Input.Runner.AngleFix) * 3.1415926f / 180.0f),
-                (float)Math.Cos((angle + Where.Input.Runner.AngleFix) * 3.1415926f / 180.0f)
-                 );
+                    (float)Math.Sin((angle + Where.Input.Runner.AngleFix) * 3.1415926f / 180.0f),
+                    (float)Math.Cos((angle + Where.Input.Runner.AngleFix) * 3.1415926f / 180.0f)
+                );
                 delta *= -1.0f * keyMovespeed;
                 endDelta = delta;
                 tmpDelta = delta;
@@ -51,28 +51,27 @@ namespace Where.Game
                 if (s != Input.Runner.StateType.Stop)
                 {
                     mouseMoveSpeed = s == Input.Runner.StateType.Go ? 0.2f : -0.2f;
-                    Input.Runner.State = 0;
                 }
-                if (Math.Abs(keyMovespeed) > 0.0f)
+            }
+            if (Math.Abs(mouseMoveSpeed) > 0.0f)
+            {
+                mouseMoveSpeed *= 0.7f;
+                if (Math.Abs(mouseMoveSpeed) < 0.05f)
                 {
-                    mouseMoveSpeed *= 0.7f;
-                    if (Math.Abs(mouseMoveSpeed) < 0.05f)
-                    {
-                        mouseMoveSpeed = 0.0f;
-                        Input.Runner.MouseWheeled = false;
-                    }
-                        
+                    mouseMoveSpeed = 0.0f;
+                    Input.Runner.MouseWheeled = false;
                 }
                 Vector2 delta = new Vector2(
                      (float)Math.Sin((angle) * 3.1415926f / 180.0f),
                      (float)Math.Cos((angle) * 3.1415926f / 180.0f)
                  );
                 delta *= -1.0f * mouseMoveSpeed;
-                tmpDelta = tmpDelta + delta;
+
+                tmpDelta += delta;
+
                 if (Math.Sqrt(tmpDelta.X * tmpDelta.X + tmpDelta.Y * tmpDelta.Y) <= 1) endDelta = tmpDelta;
             }
             Position += endDelta;
-            
         }
 
         public Vector2 Position { get; set; }

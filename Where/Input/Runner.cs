@@ -94,11 +94,8 @@
             get
             {
                 var ret = mouseWheelstate;
-                return ret;
-            }
-            set
-            {
                 mouseWheelstate = StateType.Stop;
+                return ret;
             }
         }
 
